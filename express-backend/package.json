@@ -88,7 +88,8 @@
     "eslint-config-google": "^0.14.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"**/*.{js,jsx}\""
   },
   "author": "",
   "license": "ISC"
