@@ -37,13 +37,17 @@ function AccountCreation() {
   return (
     <div className="account-creation-page-parent">
       <div className="account-creation-email-input">
-        <input className="input-box" type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
-        { errors.emailInvalid && <div>Email is Invalid</div> }
+        <input className={ !errors.emailInvalid ? "input-box" : "input-box-error" } type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
+        { errors.emailInvalid && 
+          <div className="invalid">Email is Invalid</div>
+        }
       </div>
       <div className="account-creation-password-input">
         <input className="input-box" type="password" name="password" placeholder="Pasword" onChange={e => setPassword(e.target.value)}/>
         <input className="input-box" type="password" name="confirmPassword" placeholder="Confirm Password" onChange={e => setConfirmPasword(e.target.value)}/>
-        { errors.passwordsDontMatch && <div>Passwords don't match</div> }
+        { errors.passwordsDontMatch &&
+          <div className="invalid">Passwords don't match</div>
+      }
       </div>
       <button className="submitButton" type="submit" onClick={goButtonSubmitted}>GO</button>
     </div>
