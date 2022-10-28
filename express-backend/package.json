@@ -85,11 +85,14 @@
   },
   "devDependencies": {
     "eslint": "^8.26.0",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-google": "^0.14.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint \"**/*.{js,jsx}\""
+    "lint": "eslint \"**/*.{js,jsx}\"",
+    "prepare": "cd ../ && husky install ./express-backend/.husky"
   },
   "author": "",
   "license": "ISC"
