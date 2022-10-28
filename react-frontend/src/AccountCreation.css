@@ -1,0 +1,33 @@
+
+html {background-color: #A13237}
+
+.account-creation-page-parent {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.account-creation-email-input {
+  /* padding-top: 50px; */
+}
+
+.account-creation-password-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.input-box {
+  height: 20px;
+  width: 400px;
+}
+
+.submitButton {
+  width: 200px;
+  height: 75px;
+  font-size: 50px;
+  background-color: #C5821F;
+  border-color: #C5821F;
+}
