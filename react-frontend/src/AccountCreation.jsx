@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, {useState} from 'react'
 
 import "./AccountCreation.css"
@@ -14,7 +12,7 @@ function AccountCreation() {
     passwordsDontMatch: false,
   });
 
-  const checkFieldsValid = () => {return email.length !== 0 || password.length !== 0 || confirmPasword.length !== 0}
+  const checkFieldsValid = () => email.length !== 0 && password.length !== 0 && confirmPasword.length !== 0
   const checkEmailValid = () => /.+@.+\.[A-Za-z]+$/.test(email); // Complicated regex. Don't worry about it...
 
   const goButtonSubmitted = () => {
@@ -37,7 +35,7 @@ function AccountCreation() {
   return (
     <div className="account-creation-page-parent">
       <div className="account-creation-email-input">
-        <input className={ !errors.emailInvalid ? "input-box" : "input-box-error" } type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
+        <input className="input-box" type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
         { errors.emailInvalid && 
           <div className="invalid">Email is Invalid</div>
         }
@@ -46,7 +44,7 @@ function AccountCreation() {
         <input className="input-box" type="password" name="password" placeholder="Pasword" onChange={e => setPassword(e.target.value)}/>
         <input className="input-box" type="password" name="confirmPassword" placeholder="Confirm Password" onChange={e => setConfirmPasword(e.target.value)}/>
         { errors.passwordsDontMatch &&
-          <div className="invalid">Passwords don't match</div>
+          <div className="invalid">Passwords don&apos;t match</div>
       }
       </div>
       <button className="submitButton" type="submit" onClick={goButtonSubmitted}>GO</button>
