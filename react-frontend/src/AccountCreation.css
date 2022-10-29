@@ -6,7 +6,18 @@ html {background-color: #A13237}
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  margin-top: 20%;
+  margin-top: 1em;
+}
+
+.test {
+  color: white;
+}
+
+.title {
+  font-size: 150px;
+  color: black;
+  border: solid 15px;
+  border-image:   linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
 }
 
 .account-creation-email-input {
@@ -14,10 +25,7 @@ html {background-color: #A13237}
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-}
-
-.account-creation-email-input > * {
-  margin-top: 30px;
+  margin-top: 0.25em;
 }
 
 .account-creation-password-input {
@@ -27,32 +35,29 @@ html {background-color: #A13237}
   flex-direction: column;
 }
 
-.account-creation-password-input > *{
-  margin-top: 30px;
-}
-
 .input-box {
-  font-size: 40pt;
+  font-size: 50px;
+  margin-top: 0.25em;
 }
 
-input-box-error {
-  font-size: 40pt;
+.input-box-error {
+  font-size: 50px;
+  margin-top: 0.25em;
+  border: solid red 7px;
 }
 
 .invalid {
-  font-size: 50pt;
-  /* color: red; */
-  border: solid black 2px;
-  /* border-color: blue; */
-  /* background-color: yellow; */
+  margin-top: 5px;
+  font-size: 25px;
+  color: white;
 }
 
 .submitButton {
-  width: 200px;
-  height: 75px;
-  font-size: 50px;
+  width: 300px;
+  height: 100px;
+  font-size: 65px;
   background-color: #C5821F;
   border-color: #C5821F;
 
-  margin-top: 50px;
+  margin-top: 0.2em;
 }
