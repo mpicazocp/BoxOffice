@@ -1,0 +1,63 @@
+
+html {background-color: #A13237}
+
+.account-creation-page-parent {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  margin-top: 1em;
+}
+
+.test {
+  color: white;
+}
+
+.title {
+  font-size: 150px;
+  color: black;
+  border: solid 15px;
+  border-image:   linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
+}
+
+.account-creation-email-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  margin-top: 0.25em;
+}
+
+.account-creation-password-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.input-box {
+  font-size: 50px;
+  margin-top: 0.25em;
+}
+
+.input-box-error {
+  font-size: 50px;
+  margin-top: 0.25em;
+  border: solid red 7px;
+}
+
+.invalid {
+  margin-top: 5px;
+  font-size: 25px;
+  color: white;
+}
+
+.submitButton {
+  width: 300px;
+  height: 100px;
+  font-size: 65px;
+  background-color: #C5821F;
+  border-color: #C5821F;
+
+  margin-top: 0.2em;
+}

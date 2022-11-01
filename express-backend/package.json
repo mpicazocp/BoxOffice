@@ -86,13 +86,16 @@
   "devDependencies": {
     "eslint": "^8.26.0",
     "eslint-config-google": "^0.14.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint \"**/*.{js,jsx}\"",
     "dev": "nodemon db_backend.js",
-    "start": "node db_backend.js"
+    "start": "node db_backend.js",
+    "prepare": "cd ../ && husky install ./express-backend/.husky"
   },
   "author": "",
   "license": "ISC",
