@@ -1,7 +1,12 @@
+import React from 'react';
+
+import AccountCreation from "./AccountCreation";
+
 function App() {
+
   return (
     <div className="App">
-      <div>test</div>
+      <AccountCreation />
     </div>
   );
 }
