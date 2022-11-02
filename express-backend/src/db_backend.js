@@ -14,8 +14,9 @@ app.use(express.json());
 
 app.get('/users', async (req, res) => {
   const email = req.query['email'];
+  const pwsd = req.query['password'];
   try {
-    const result = await userServices.getUsers(email);
+    const result = await userServices.getUsers(email, pwsd);
     res.send({users_list: result});
   } catch (error) {
     console.log(error);

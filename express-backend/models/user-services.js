@@ -9,12 +9,14 @@ mongoose
     })
     .catch((error) => console.log(error));
 
-exports.getUsers = async function getUsers(email) {
+exports.getUsers = async function getUsers(email, pwsd) {
   let result;
-  if (email === undefined) {
+  if (email === undefined && pwsd === undefined) {
     result = await UserModel.find();
   } else if (email) {
     result = await UserModel.find({email: email});
+  } else if (pwsd) {
+    result = await UserModel.find({password: pwsd});
   }
   return result;
 };
