@@ -13,15 +13,17 @@ html {
 .buttons{
     display: flex;
     flex-direction: row;
-    margin-bottom:7em;
+    margin-bottom:5em;
     float: right;
-    
+    justify-content: flex-end;
+    margin-left: auto;
+    margin-right: 2em;
 }
 
 .loginButton {
     width: 100px;
     height: 70px;
-    font-size: 20px;
+    font-size: 15px;
     color:aliceblue;
     background-color: #000000;
     border-color: #0c0000;
