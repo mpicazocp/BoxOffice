@@ -1,0 +1,66 @@
+html {
+    background-color: #A13237
+}
+
+.login-page-parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    margin-top: 7em;
+}
+
+.test {
+    color: white;
+}
+
+.login-page-email-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    margin-top: 5%;
+}
+
+.login-page-password-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.login-page-password-input>* {
+    margin-top: 0.5em;
+}
+
+.input-box {
+    font-size: 40pt;
+}
+
+input-box-error {
+    font-size: 40pt;
+}
+
+/* .invalid { */
+/*   font-size: 50pt; */
+/*   color: red; */
+/*   border: solid red 10px; */
+/*   border-color: blue; */
+/*   background-color: yellow; */
+/* } */
+
+.title {
+    font-size: 10em;
+    color: black;
+    border: solid 15px;
+    border-image: linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
+}
+
+.loginButton {
+    width: 200px;
+    height: 75px;
+    font-size: 50px;
+    background-color: #C5821F;
+    border-color: #C5821F;
+    margin-top: 40px;
+}
