@@ -1,0 +1,70 @@
+html { 
+    background-color: #A13237
+}
+
+.home-page-parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    /* margin-top: 1em; */
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    margin-bottom:7em;
+    float: right;
+    
+}
+
+.loginButton {
+    width: 100px;
+    height: 70px;
+    font-size: 20px;
+    color:aliceblue;
+    background-color: #000000;
+    border-color: #0c0000;
+    margin-left: 2em;
+    margin-top: 1em;
+}
+.createButton {
+    width: 100px;
+    height: 70px;
+    font-size: 15px;
+    color:aliceblue;
+    background-color: #000000;
+    border-color: #0c0000;
+    margin-left: 2em;
+    margin-top: 1em;
+}
+
+.searchbox{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+.searchButton {
+    width: 200px;
+    height: 70px;
+    font-size: 30px;
+    color:aliceblue;
+    background-color: #000000;
+    border-color: #0c0000;
+    margin-left: 2em;
+    margin-top: 4.5em;
+}
+
+.test {
+    color: white;
+}
+
+.title {
+    font-size: 150px;
+    color: black;
+    border: solid 15px;
+    border-image:   linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
+}

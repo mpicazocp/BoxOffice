@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import "./SearchBar.css"
+
 
 function SearchBar(){
 
@@ -18,18 +20,16 @@ function SearchBar(){
     }
 
     return(
-    <div>
-        <input
+    <div className = "SearchBarParent">
+        
+        <input className = "SearchBar"
         type="search"
         placeholder="Search here"
         onChange={handleChange}
         value={searchInput} />
         
         <table>
-            <tr>
-                <th>Media</th>
-                <th>Media</th>
-            </tr>
+            
             {MediaList.map((media) => 
                 <div>
                     <tr>
