@@ -7,13 +7,13 @@ import "./HomePage.css"
 function HomePage() {
 
     const SearchButtonSubmit = () => {
-        console.debug("Congrats!");
+        // console.debug("Congrats!");
     };
     const LoginButtonSubmit = () => {
-        console.debug("oppo!");
+        // console.debug("Congrats!");
     };
     const CreateAccountButtonSubmit = () => {
-        console.debug("Submitted!");
+        // console.debug("Submitted!");
     };
     
     return (
