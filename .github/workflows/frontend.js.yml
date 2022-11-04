@@ -33,4 +33,4 @@ jobs:
         cache-dependency-path: "react-frontend/package-lock.json"
     - run: npm i
     - run: npm run build --if-present
-    - run: npm ptest
+    - run: npm run ptest
