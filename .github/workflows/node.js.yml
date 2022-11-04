@@ -11,7 +11,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./express-backend
+    working-directory: express-backend
 
 jobs:
   build:
@@ -30,6 +30,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: "express-backend/package-lock.json"
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
