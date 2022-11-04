@@ -55,21 +55,21 @@ app.delete('/users/:id', async (req, res) => {
   }
 });
 
-// // update media_list for user
-// app.patch('users/:media_list', async (req, res) => {
-//   const id = req.params['id'];
-//   mediaObj = _.extend(id, req.body);
-//   mediaObj.save(function(err) {
-//     if (err) {
-//       return res.send('/media_list', {
-//         errors: err.errors,
-//         company: company,
-//       });
-//     } else {
-//       res.jsonp(company);
-//     }
-//   });
-// });
+// update media_list for user
+app.patch('users/:media_list', async (req, res) => {
+  const id = req.params['id'];
+  mediaObj = _.extend(id, req.body);
+  mediaObj.save(function(err) {
+    if (err) {
+      return res.send('/media_list', {
+        errors: err.errors,
+        company: company,
+      });
+    } else {
+      res.jsonp(company);
+    }
+  });
+});
 
 
 /* ########################### end user requests ############################*/
