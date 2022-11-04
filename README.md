@@ -1,8 +1,10 @@
 # BoxOffice
 This is the development repository for the BoxOffice application.
 
-# Buttons 
-[![Frontend](https://github.com/mpicazocp/BoxOffice/blob/main/.github/workflows/frontend.js.yml/badge.svg?branch=ci-cd)](https://github.com/mpicazocp/BoxOffice/blob/main/.github/workflows/frontend.js.yml)
+### Buttons 
+[![Frontend](https://github.com/mpicazocp/BoxOffice/actions/workflows/frontend.js.yml/badge.svg?branch=ci-cd)](https://github.com/mpicazocp/BoxOffice/actions/workflows/frontend.js.yml)
+
+[![Backend](https://github.com/mpicazocp/BoxOffice/actions/workflows/node.js.yml/badge.svg?branch=ci-cd)](https://github.com/mpicazocp/BoxOffice/actions/workflows/node.js.yml)
 
 ### Style Guides
 For frontend work, use the AirBnB JavaScript React style guide: https://airbnb.io/javascript/react/ <br />
