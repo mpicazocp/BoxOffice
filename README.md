@@ -1,6 +1,9 @@
 # BoxOffice
 This is the development repository for the BoxOffice application.
 
+#Buttons 
+![Pipeline](ci-cd)
+
 ### Style Guides
 For frontend work, use the AirBnB JavaScript React style guide: https://airbnb.io/javascript/react/ <br />
 For backend work, use the Google JavaScript style guide: https://google.github.io/styleguide/jsguide.html
