@@ -10,7 +10,7 @@ function HomePage() {
         console.debug("Congrats!");
     };
     const LoginButtonSubmit = () => {
-        console.debug("Congrats!");
+        console.debug("oppo!");
     };
     const CreateAccountButtonSubmit = () => {
         console.debug("Submitted!");
