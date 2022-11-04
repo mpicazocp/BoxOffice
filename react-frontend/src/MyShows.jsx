@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
+import MediaDisplay from './MediaDisplay'
+
 function MyShows() {
 
   const [mediaList, setMediaList] = useState([]);
@@ -21,7 +23,9 @@ function MyShows() {
     <div>
       <input type="search" />
       <div>My Shows</div>
-      {mediaList.map(val => <div>{val.name}</div>)}
+      {mediaList.map(media => 
+        <MediaDisplay name={media.name} content_type={media.content_type}/>
+      )}
       <button type="button">SORT</button>
     </div>
   );
