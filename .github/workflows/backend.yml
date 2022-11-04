@@ -5,9 +5,9 @@ name: Backend CI
 
 on:
   push:
-    branches: [ main, initialize-database, ci-cd ]
+    branches: [ main, ci-cd ]
   pull_request:
-    branches: [ main, initialize-database, ci-cd ]
+    branches: [ main, ci-cd ]
 
 defaults:
   run:
