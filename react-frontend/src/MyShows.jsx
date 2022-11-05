@@ -20,37 +20,37 @@ function MyShows() {
       [
         {
           name: "Shrek",
-          content_type: "PG-13",
+          rating: "PG-13",
           img: "https://upload.wikimedia.org/wikipedia/en/7/7b/Shrek_%282001_animated_feature_film%29.jpg",
           streamingService: "Peacock"
         },
         {
           name: "Shrek 2",
-          content_type: "PG-13",
+          rating: "PG-13",
           img: "https://upload.wikimedia.org/wikipedia/en/b/b9/Shrek_2_poster.jpg",
           streamingService: "Peacock"
         },
         {
           name: "Shrek 3",
-          content_type: "R",
+          rating: "R",
           img: "https://upload.wikimedia.org/wikipedia/en/2/22/Shrek_the_Third_%282007_animated_feature_film%29.jpg",
           streamingService: "N/A"
         },
         {
           name: "Shrek 4: the one that everybody forgot",
-          content_type: "R",
+          rating: "R",
           img: "https://upload.wikimedia.org/wikipedia/en/7/70/Shrek_Forever_After_%282010_animated_feature_film%29.jpg",
           streamingService: "Hulu"
         },
         {
           name: "Zapped",
-          content_type: "PG",
+          rating: "PG",
           img: "https://upload.wikimedia.org/wikipedia/en/9/91/Zapped_2014_Poster.jpg",
           streamingService: "Pluto"
         },
         {
           name: "After Earth",
-          content_type: "PG",
+          rating: "PG",
           img: "https://upload.wikimedia.org/wikipedia/en/5/5b/After_Earth_Poster.jpg",
           streamingService: "Prime Video"
         }
@@ -152,7 +152,7 @@ function MyShows() {
       <div className="my-shows-media-holder">
         <button type="button" onClick={moveMediaListLeft} className="my-shows-move-left-button">&lt;</button>
         {getSortedMediaList().slice(index.start, index.end).map(media => 
-          <MediaDisplay key={media.name} name={media.name} contentType={media.content_type} img={media.img} streamingService={media.streamingService}/>
+          <MediaDisplay key={media.name} name={media.name} rating={media.rating} img={media.img} streamingService={media.streamingService}/>
         )}
         <button type="button" onClick={moveMediaListRight} className="my-shows-move-right-button">&gt;</button>
       </div>
