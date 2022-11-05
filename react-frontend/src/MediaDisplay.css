@@ -1,0 +1,13 @@
+
+.media-display-parent {
+  /* This is the most common size for the files. Should scale?*/
+  width: 270px;
+  height: 373px;
+  border: solid #C5821F 7px;
+}
+
+.media-display-image {
+  width: 100%;
+  height: 80%;
+}
+

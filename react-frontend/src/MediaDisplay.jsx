@@ -1,21 +1,21 @@
 import React from 'react'
 
+import "./MediaDisplay.css"
+
 function MediaDisplay(props) {
 
-  function destructure(){
-    const { name } = props.name;
-    const { contentType } = props.content_type;
-    return (
-      <div>
-        {name}
-        {contentType}
-      </div>
-    )
-  }
+  const { name, contentType, streamingService, img } = props;
 
   return (
-    <div>
-      {destructure}
+    <div className="media-display-parent">
+      <img 
+        className="media-display-image"
+        src={img}
+        alt={img}
+      />
+      <div>{name}</div>
+      <div>{streamingService}</div>
+      <div>{contentType}</div>
     </div>
   );
 }
