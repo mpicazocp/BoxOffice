@@ -1,0 +1,31 @@
+
+html {background-color: #A13237}
+
+.show-info-parent {
+  display: flex;
+  margin-left: 5%;
+  margin-top: 5%;
+}
+
+.show-info-img {
+  width: 370px;
+  height: 473px;
+  border: solid #C5821F 7px;
+  background-color: #C5821F;
+}
+
+.show-info-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.show-info-detail-title {
+  margin-left: 0.5em;
+  font-size: 30px;
+}
+
+.show-info-detail {
+  margin-left: 1em;
+  color: white;
+}
