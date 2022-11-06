@@ -1,0 +1,25 @@
+
+.listings-page-parent {
+    background-color: rgb(227, 220, 211);
+
+}
+.header {
+    padding:60px;
+    font-size: 100 px;
+    color: white;
+    display: flex;
+    justify-content: left;
+    background: #A13237;
+}
+
+.listings {
+    font-size: 50 px;
+    color: black;
+}
+
+/* .title {
+    font-size: 150px;
+    color: black;
+    border: solid 15px;
+    border-image:   linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
+} */

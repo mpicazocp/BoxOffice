@@ -1,11 +1,13 @@
 import React from 'react';
-import HomePage from "./HomePage";
+// import HomePage from "./HomePage";
+import ListingsPage from './showListings';
 
 
 function App() {
+  
   return (
     <div className="App">
-      <HomePage/>
+      <ListingsPage/>
     </div>
   );
 }
