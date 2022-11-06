@@ -3,6 +3,18 @@
     background-color: rgb(227, 220, 211);
 
 }
+
+.loginButton {
+    width: 100px;
+    height: 70px;
+    font-size: 15px;
+    color:aliceblue;
+    background-color: #000000;
+    border-color: #0c0000;
+    margin-left: 2em;
+    margin-top: 1em;
+}
+
 .header {
     padding:60px;
     font-size: 100 px;
