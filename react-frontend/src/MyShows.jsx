@@ -12,8 +12,6 @@ function MyShows() {
   const [sortingSelection, setSortingSelection] = useState("");
   const typesOfSorts = ["A-Z", "Z-A", "Streaming Service"];
 
-  const [filter, setFilter] = useState("");
-
   // Run on page load
   useEffect(() => {
     // Async get media list at some point
@@ -60,7 +58,7 @@ function MyShows() {
   }, [])
 
   function getSortedMediaList() {
-    let temp = [...mediaList];
+    const temp = [...mediaList];
     if (sortingSelection === "A-Z") {
       temp.sort((a,b) => {
         const fa = a.name.toLowerCase();
@@ -104,11 +102,6 @@ function MyShows() {
       });
     }
 
-    // Filtering
-    if (filter !== ""){
-      temp = temp.filter(v => v.name.toLowerCase().includes(filter.toLowerCase()))
-    }
-
     return temp
   }
 
@@ -144,10 +137,6 @@ function MyShows() {
     return <button type="button" onClick={() => setSortingSelection(typesOfSorts[0])} className="my-shows-sort-button">SORT</button>
   }
 
-  function filterShows(e) {
-    setFilter(e.target.value);
-  }
-
   return (
     <div className="my-shows-parent">
       <div className="my-shows-header-parent">
@@ -155,7 +144,7 @@ function MyShows() {
           <div className="my-shows-office"><span className="my-shows-box">Box</span>Office</div>
         </div>
         <div className="my-shows-search-parent">
-          <input type="search" className="my-shows-searchbar" placeholder="Search" onChange={filterShows}/>
+          <input type="search" className="my-shows-searchbar" placeholder="Search"/>
         </div>
       </div>
       <div className="my-shows-text">My Shows</div>
