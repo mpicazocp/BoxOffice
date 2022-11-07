@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-
+import axios from 'axios'
 import "./AccountCreation.css"
 
 function AccountCreation() {
@@ -34,6 +34,27 @@ function AccountCreation() {
     console.debug("password:", password);
     console.debug("confirmPasword:", confirmPasword);
   };
+
+  async function makePostCall(person) {
+    try {
+      const response = await axios.post('http//localhost:5000/users', person);
+      return response;
+    }
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  function updateList(person) {
+    makePostCall(person).then(result => {
+      if (result && result.status === 201) {
+        const userToAdd = person;
+        userToAdd._id = result.data._id;
+
+      }
+    });
+  }
 
   return (
     <div className="account-creation-page-parent">

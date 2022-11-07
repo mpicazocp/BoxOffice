@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import "./LoginPage.css"
+import axios from 'axios'
 
 function UserLogin() {
 
@@ -25,6 +26,39 @@ function UserLogin() {
     console.debug("Congrats!");
     console.debug("email:", email);
     console.debug("password:", password);
+  };
+
+  async function fetchAllUsers() {
+    try {
+      const response = await axios.get('http//localhost:5000/users');
+      return response.data.users_list;
+    }
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  async function makePostCall(person) {
+    try {
+      const response = await axios.post('http//localhost:5000/users', person);
+      return response;
+    }
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  async function makeDeleteCall(urlWithId) {
+    try {
+      const response = await axios.delete(urlWithId);
+      return response;
+    }
+    catch (error) {
+      console.log(error);
+      return false;
+    }
   };
 
   return (
