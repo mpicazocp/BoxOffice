@@ -56,19 +56,15 @@ app.delete('/users/:id', async (req, res) => {
 });
 
 // update media_list for user
-app.patch('users/:media_list', async (req, res) => {
-  const id = req.params['id'];
-  mediaObj = _.extend(id, req.body);
-  mediaObj.save(function(err) {
-    if (err) {
-      return res.send('/media_list', {
-        errors: err.errors,
-        company: company,
-      });
-    } else {
-      res.jsonp(company);
-    }
-  });
+app.patch('/users/:id', async (req, res) => {
+  const userId = req.params['id'];
+  const mediaId = req.body['media'];
+  const savedUser = await userServices.addMedia(userId, mediaId);
+  if (savedUser) {
+    res.status(200).end();
+  } else {
+    re.status(500).end();
+  }
 });
 
 

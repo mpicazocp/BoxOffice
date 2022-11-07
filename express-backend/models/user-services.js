@@ -41,9 +41,17 @@ exports.addUser = async function addUser(user) {
   }
 };
 
-exports.addMedia = async function addMedia() {
+exports.addMedia = async function addMedia(userId, mediaId) {
   try {
-    console.log('Tests');
+    const userToPatch = await UserModel.findById(userId);
+    if (mediaId) { // remove existing media document reference
+      userToPatch.media_list = userToPatch.media_list.filter(({
+        medId}) => medId !== mediaId);
+    } else { // add new media document reference
+      userToPatch.media_list.push(mediaId);
+    }
+    const savedUser = await userToPatch.save();
+    return savedUser;
   } catch (error) {
     console.log(error);
   }
