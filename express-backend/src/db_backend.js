@@ -17,7 +17,7 @@ app.get('/users', async (req, res) => {
   const pwsd = req.query['password'];
   try {
     const result = await userServices.getUsers(email, pwsd);
-    res.send({users_list: result});
+    res.send({ users_list: result });
   } catch (error) {
     console.log(error);
     res.status(500).send('An error ocurred in the server.');
@@ -30,7 +30,7 @@ app.get('/users/:id', async (req, res) => {
   if (result === undefined || result === null) {
     res.status(404).send('Resource not found.');
   } else {
-    res.send({users_list: result});
+    res.send({ users_list: result });
   }
 });
 
@@ -59,7 +59,7 @@ app.delete('/users/:id', async (req, res) => {
 app.patch('users/:media_list', async (req, res) => {
   const id = req.params['id'];
   mediaObj = _.extend(id, req.body);
-  mediaObj.save(function(err) {
+  mediaObj.save(function (err) {
     if (err) {
       return res.send('/media_list', {
         errors: err.errors,
@@ -70,7 +70,6 @@ app.patch('users/:media_list', async (req, res) => {
     }
   });
 });
-
 
 /* ########################### end user requests ############################*/
 
@@ -83,7 +82,7 @@ app.get('/media', async (req, res) => {
   const strmSrv = req.query['strm_srv'];
   try {
     const result = await mediaServices.getMedia(name, type, genre, strmSrv);
-    res.send({media_list: result});
+    res.send({ media_list: result });
   } catch (error) {
     console.log(error);
     res.status(500).send('An error ocurred in the server.');
@@ -96,7 +95,7 @@ app.get('/media/:id', async (req, res) => {
   if (result === undefined || result === null) {
     res.status(404).send('Resource not found.');
   } else {
-    res.send({media_list: result});
+    res.send({ media_list: result });
   }
 });
 
@@ -123,6 +122,10 @@ app.delete('/media/:id', async (req, res) => {
 
 /* ########################### end media requests ###########################*/
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+// app.listen(port, () => {
+//   console.log(`Example app listening at http://localhost:${port}`);
+// });
+
+app.listen(process.env.PORT || port, () => {
+  console.log('REST API is listening.');
 });
