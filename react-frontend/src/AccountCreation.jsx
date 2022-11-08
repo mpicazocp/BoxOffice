@@ -12,6 +12,15 @@ function AccountCreation() {
     passwordsDontMatch: false,
   });
 
+  //this is used to make a post call when button is pushed
+  const [user, setUser] = useState(
+    {
+      email: "", 
+      password: "",
+      media_list: [],
+    }
+  )
+
   const checkFieldsValid = () => email.length !== 0 && password.length !== 0 && confirmPasword.length !== 0
   const checkEmailValid = () => /.+@.+\.[A-Za-z]+$/.test(email); // Complicated regex. Don't worry about it...
 
@@ -29,13 +38,19 @@ function AccountCreation() {
   const goButtonSubmitted = () => {
     if (errors.emailInvalid || errors.passwordsDontMatch) { return; }
 
+    //set the user to the values submitted
+    setUser({email: email, password: password, media_list: []});
+    //post the user to the user list
+    addUser(user);
+    
     console.debug("Congrats!");
     console.debug("email:", email);
     console.debug("password:", password);
     console.debug("confirmPasword:", confirmPasword);
   };
 
-  async function makePostCall(person) {
+  //use axios to post to the backend
+  async function addUser(person) {
     try {
       const response = await axios.post('http//localhost:5000/users', person);
       return response;
@@ -45,16 +60,6 @@ function AccountCreation() {
       return false;
     }
   };
-
-  function updateList(person) {
-    makePostCall(person).then(result => {
-      if (result && result.status === 201) {
-        const userToAdd = person;
-        userToAdd._id = result.data._id;
-
-      }
-    });
-  }
 
   return (
     <div className="account-creation-page-parent">
