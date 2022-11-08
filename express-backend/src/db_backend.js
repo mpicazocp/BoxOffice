@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable space-before-function-paren */
+/* eslint-disable object-curly-spacing */
 const express = require('express');
 const cors = require('cors');
 
