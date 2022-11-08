@@ -12,7 +12,7 @@ function AccountCreation() {
     passwordsDontMatch: false,
   });
 
-  //this is used to make a post call when button is pushed
+  // this is used to make a post call when button is pushed
   const [user, setUser] = useState(
     {
       email: "", 
@@ -35,21 +35,7 @@ function AccountCreation() {
     setErrors(err);
   }, [email, password, confirmPasword])
 
-  const goButtonSubmitted = () => {
-    if (errors.emailInvalid || errors.passwordsDontMatch) { return; }
-
-    //set the user to the values submitted
-    setUser({email: email, password: password, media_list: []});
-    //post the user to the user list
-    addUser(user);
-    
-    console.debug("Congrats!");
-    console.debug("email:", email);
-    console.debug("password:", password);
-    console.debug("confirmPasword:", confirmPasword);
-  };
-
-  //use axios to post to the backend
+   // use axios to post to the backend
   async function addUser(person) {
     try {
       const response = await axios.post('http//localhost:5000/users', person);
@@ -60,6 +46,22 @@ function AccountCreation() {
       return false;
     }
   };
+
+  const goButtonSubmitted = () => {
+    if (errors.emailInvalid || errors.passwordsDontMatch) { return; }
+
+    // set the user to the values submitted
+    setUser({ email, password, media_list: []});
+    // post the user to the user list
+    addUser(user);
+    
+    console.debug("Congrats!");
+    console.debug("email:", email);
+    console.debug("password:", password);
+    console.debug("confirmPasword:", confirmPasword);
+  };
+
+ 
 
   return (
     <div className="account-creation-page-parent">
