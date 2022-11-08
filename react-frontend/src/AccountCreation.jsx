@@ -61,7 +61,7 @@ function AccountCreation() {
     console.debug("confirmPasword:", confirmPasword);
   };
 
- 
+
 
   return (
     <div className="account-creation-page-parent">
