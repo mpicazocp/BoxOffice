@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable object-curly-spacing */
 const mongoose = require('mongoose');
 const MediaModel = require('./media');
 const dotenv = require('dotenv');

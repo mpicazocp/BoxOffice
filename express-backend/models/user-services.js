@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable object-curly-spacing */
 const mongoose = require('mongoose');
 const UserModel = require('./user');
 const dotenv = require('dotenv');
