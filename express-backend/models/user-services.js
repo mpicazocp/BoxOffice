@@ -1,22 +1,30 @@
 const mongoose = require('mongoose');
 const UserModel = require('./user');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 mongoose.set('debug', true);
 
 mongoose
-    .connect('mongodb://localhost:27017/boxoffice', {
-      useNewUrlParser: true,
+  .connect(
+    process.env.MONGODB_URI,
+    // "mongodb://localhost:27017/users",
+    {
+      useNewUrlParser: true, // useFindAndModify: false,
       useUnifiedTopology: true,
-    })
-    .catch((error) => console.log(error));
+    }
+  )
+  .catch((error) => console.log(error));
 
 exports.getUsers = async function getUsers(email, pwsd) {
   let result;
   if (email === undefined && pwsd === undefined) {
     result = await UserModel.find();
   } else if (email) {
-    result = await UserModel.find({email: email});
+    result = await UserModel.find({ email: email });
   } else if (pwsd) {
-    result = await UserModel.find({password: pwsd});
+    result = await UserModel.find({ password: pwsd });
   }
   return result;
 };
@@ -41,13 +49,14 @@ exports.addUser = async function addUser(user) {
   }
 };
 
-exports.addMedia = async function addMedia(userId, mediaId) {
+exports.patchUserMedia = async function addMedia(userId, mediaId) {
   try {
     const userToPatch = await UserModel.findById(userId);
-    if (mediaId) { // remove existing media document reference
-      userToPatch.media_list = userToPatch.media_list.filter(({
-        medId}) => medId !== mediaId);
-    } else { // add new media document reference
+    if (mediaId) {
+      // remove existing media document reference
+      userToPatch.media_list = userToPatch.media_list.filter(({ medId }) => medId !== mediaId);
+    } else {
+      // add new media document reference
       userToPatch.media_list.push(mediaId);
     }
     const savedUser = await userToPatch.save();

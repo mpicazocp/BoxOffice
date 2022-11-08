@@ -1,26 +1,34 @@
 const mongoose = require('mongoose');
 const MediaModel = require('./media');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 mongoose.set('debug', true);
 
-mongoose.connect('mongodb://localhost:27017/boxoffice', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-    .catch((error) => console.log(error));
+mongoose
+  .connect(
+    process.env.MONGODB_URI,
+    // "mongodb://localhost:27017/users",
+    {
+      useNewUrlParser: true, // useFindAndModify: false,
+      useUnifiedTopology: true,
+    }
+  )
+  .catch((error) => console.log(error));
 
 exports.getMedia = async function getMedia(name, type, genre, strmSrv) {
   let result;
-  if (name === undefined && type === undefined && genre === undefined &&
-     strmSrv === undefined) {
+  if (name === undefined && type === undefined && genre === undefined && strmSrv === undefined) {
     result = await MediaModel.find();
   } else if (name) {
-    result = await MediaModel.find({name: name});
+    result = await MediaModel.find({ name: name });
   } else if (type) {
-    result = await MediaModel.find({content_type: type});
+    result = await MediaModel.find({ content_type: type });
   } else if (genre) {
-    result = await MediaModel.find({genre: genre});
+    result = await MediaModel.find({ genre: genre });
   } else if (strmSrv) {
-    result = await MediaModel.find({strm_srv: strmSrv});
+    result = await MediaModel.find({ strm_srv: strmSrv });
   }
   return result;
 };
