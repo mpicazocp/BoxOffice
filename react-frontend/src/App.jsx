@@ -1,6 +1,7 @@
 import React from 'react';
 // import HomePage from "./HomePage";
-import AccountCreation from "./AccountCreation";
+import LoginPage from "./LoginPage"
+// import AccountCreation from "./AccountCreation";
 
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
 
   return (
     <div className="App">
-      <AccountCreation/>
+      <LoginPage/>
     </div>
   );
 }

@@ -43,20 +43,17 @@ function AccountCreation() {
     if (errors.emailInvalid || errors.passwordsDontMatch) { return; }
 
     // consider doing a check here to see if email already exists
-    
+
     // send a post request to add the new user
     addUser(email, password);
 
     // ask sam about applying a link here
 
-
-    console.debug("Congrats!");
     console.debug("email:", email);
     console.debug("password:", password);
     console.debug("confirmPasword:", confirmPasword);
     
   };
-
 
 
   return (
