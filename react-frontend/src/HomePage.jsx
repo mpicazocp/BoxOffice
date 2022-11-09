@@ -8,13 +8,13 @@ import "./HomePage.css"
 function HomePage() {
 
     const SearchButtonSubmit = () => {
-        console.debug("Congrats!");
+        // console.debug("Congrats!");
     };
     const LoginButtonSubmit = () => {
-        console.debug("Congrats!");
+        // console.debug("Congrats!");
     };
     const CreateAccountButtonSubmit = () => {
-        console.debug("Congrats!");
+        // console.debug("Submitted!");
     };
     
     return (
