@@ -1,3 +1,6 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable space-before-function-paren */
+/* eslint-disable object-curly-spacing */
 const express = require('express');
 const cors = require('cors');
 
@@ -17,7 +20,7 @@ app.get('/users', async (req, res) => {
   const pwsd = req.query['password'];
   try {
     const result = await userServices.getUsers(email, pwsd);
-    res.send({users_list: result});
+    res.send({ users_list: result });
   } catch (error) {
     console.log(error);
     res.status(500).send('An error ocurred in the server.');
@@ -30,7 +33,7 @@ app.get('/users/:id', async (req, res) => {
   if (result === undefined || result === null) {
     res.status(404).send('Resource not found.');
   } else {
-    res.send({users_list: result});
+    res.send({ users_list: result });
   }
 });
 
@@ -55,22 +58,17 @@ app.delete('/users/:id', async (req, res) => {
   }
 });
 
-// // update media_list for user
-// app.patch('users/:media_list', async (req, res) => {
-//   const id = req.params['id'];
-//   mediaObj = _.extend(id, req.body);
-//   mediaObj.save(function(err) {
-//     if (err) {
-//       return res.send('/media_list', {
-//         errors: err.errors,
-//         company: company,
-//       });
-//     } else {
-//       res.jsonp(company);
-//     }
-//   });
-// });
-
+// update media_list for user
+app.patch('/users/:id', async (req, res) => {
+  const userId = req.params['id'];
+  const mediaId = req.body;
+  const savedUser = await userServices.patchUserMedia(userId, mediaId);
+  if (savedUser) {
+    res.status(200).end();
+  } else {
+    re.status(500).end();
+  }
+});
 
 /* ########################### end user requests ############################*/
 
@@ -83,7 +81,7 @@ app.get('/media', async (req, res) => {
   const strmSrv = req.query['strm_srv'];
   try {
     const result = await mediaServices.getMedia(name, type, genre, strmSrv);
-    res.send({media_list: result});
+    res.send({ media_list: result });
   } catch (error) {
     console.log(error);
     res.status(500).send('An error ocurred in the server.');
@@ -96,7 +94,7 @@ app.get('/media/:id', async (req, res) => {
   if (result === undefined || result === null) {
     res.status(404).send('Resource not found.');
   } else {
-    res.send({media_list: result});
+    res.send({ media_list: result });
   }
 });
 
@@ -123,6 +121,8 @@ app.delete('/media/:id', async (req, res) => {
 
 /* ########################### end media requests ###########################*/
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(process.env.PORT || port, () => {
+  if (process.env.PORT) {
+    console.log(`REST API is listening on port: ${process.env.PORT}.`);
+  } else console.log(`REST API is listening on port: ${port}.`);
 });
