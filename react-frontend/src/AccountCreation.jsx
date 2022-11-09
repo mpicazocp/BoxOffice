@@ -29,10 +29,7 @@ function AccountCreation() {
   const goButtonSubmitted = () => {
     if (errors.emailInvalid || errors.passwordsDontMatch) { return; }
 
-    console.debug("Congrats!");
-    console.debug("email:", email);
-    console.debug("password:", password);
-    console.debug("confirmPasword:", confirmPasword);
+    // DO SOMETHING
   };
 
   return (

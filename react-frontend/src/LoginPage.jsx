@@ -22,9 +22,7 @@ function UserLogin() {
     setErrors(err);
     if (err.emailInvalid) { return; }
 
-    console.debug("Congrats!");
-    console.debug("email:", email);
-    console.debug("password:", password);
+    // DO SOMETHING
   };
 
   return (
