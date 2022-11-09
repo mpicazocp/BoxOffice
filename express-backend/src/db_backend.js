@@ -59,19 +59,15 @@ app.delete('/users/:id', async (req, res) => {
 });
 
 // update media_list for user
-app.patch('users/:media_list', async (req, res) => {
-  const id = req.params['id'];
-  mediaObj = _.extend(id, req.body);
-  mediaObj.save(function (err) {
-    if (err) {
-      return res.send('/media_list', {
-        errors: err.errors,
-        company: company,
-      });
-    } else {
-      res.jsonp(company);
-    }
-  });
+app.patch('/users/:id', async (req, res) => {
+  const userId = req.params['id'];
+  const mediaId = req.body;
+  const savedUser = await userServices.patchUserMedia(userId, mediaId);
+  if (savedUser) {
+    res.status(200).end();
+  } else {
+    re.status(500).end();
+  }
 });
 
 /* ########################### end user requests ############################*/
@@ -125,10 +121,8 @@ app.delete('/media/:id', async (req, res) => {
 
 /* ########################### end media requests ###########################*/
 
-// app.listen(port, () => {
-//   console.log(`Example app listening at http://localhost:${port}`);
-// });
-
 app.listen(process.env.PORT || port, () => {
-  console.log('REST API is listening.');
+  if (process.env.PORT) {
+    console.log(`REST API is listening on port: ${process.env.PORT}.`);
+  } else console.log(`REST API is listening on port: ${port}.`);
 });
