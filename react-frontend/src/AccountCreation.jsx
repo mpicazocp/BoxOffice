@@ -12,15 +12,7 @@ function AccountCreation() {
     passwordsDontMatch: false,
   });
 
-  // this is used to make a post call when button is pushed
-  const [user, setUser] = useState(
-    {
-      email: "", 
-      password: "",
-      media_list: [],
-    }
-  )
-
+  
   const checkFieldsValid = () => email.length !== 0 && password.length !== 0 && confirmPasword.length !== 0
   const checkEmailValid = () => /.+@.+\.[A-Za-z]+$/.test(email); // Complicated regex. Don't worry about it...
 
@@ -36,9 +28,9 @@ function AccountCreation() {
   }, [email, password, confirmPasword])
 
    // use axios to post to the backend
-  async function addUser(person) {
+  async function addUser(newEmail, newPassword) {
     try {
-      const response = await axios.post('http//localhost:5000/users', person);
+      const response = await axios.post('http//localhost:5000/users', {email : newEmail, password : newPassword, media_list: []});
       return response;
     }
     catch (error) {
@@ -50,15 +42,19 @@ function AccountCreation() {
   const goButtonSubmitted = () => {
     if (errors.emailInvalid || errors.passwordsDontMatch) { return; }
 
-    // set the user to the values submitted
-    setUser({ email, password, media_list: []});
-    // post the user to the user list
-    addUser(user);
+    // consider doing a check here to see if email already exists
     
+    // send a post request to add the new user
+    addUser(email, password);
+
+    // ask sam about applying a link here
+
+
     console.debug("Congrats!");
     console.debug("email:", email);
     console.debug("password:", password);
     console.debug("confirmPasword:", confirmPasword);
+    
   };
 
 
@@ -73,7 +69,7 @@ function AccountCreation() {
         }
       </div>
       <div className="account-creation-password-input">
-        <input className={!errors.passwordsDontMatch ? "input-box" : "input-box-error"} type="password" name="password" placeholder="Pasword" onChange={e => setPassword(e.target.value)}/>
+        <input className={!errors.passwordsDontMatch ? "input-box" : "input-box-error"} type="password" name="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
         <input className={!errors.passwordsDontMatch ? "input-box" : "input-box-error"} type="password" name="confirmPassword" placeholder="Confirm Password" onChange={e => setConfirmPasword(e.target.value)}/>
         { errors.passwordsDontMatch &&
           <div className="invalid">Passwords don&apos;t match</div>
