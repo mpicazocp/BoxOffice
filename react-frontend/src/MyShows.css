@@ -1,0 +1,93 @@
+
+html {background-color: #A13237}
+
+.my-shows-parent {
+  text-align: center;
+}
+
+.my-shows-header-parent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.my-shows-search-parent {
+  margin-top: 2em;
+  margin-right: 2em;
+}
+
+.my-shows-searchbar {
+  margin-right: 0.5em;
+  font-size: 25px;
+}
+
+.my-shows-box-office-parent {
+  margin-top: 1.5em;
+  margin-left: 1em;
+}
+
+.my-shows-box {
+  color: white;
+}
+
+.my-shows-office {
+  font-size: 45px;
+  color: black;
+  border: solid 5px;
+  border-image:   linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
+}
+
+.my-shows-text {
+  font-size: 42px;
+  color: white;
+}
+
+.my-shows-move-left-button {
+  margin-top: 3em;
+  height: 5em;
+  margin-left: 1em;
+  font-size: 30px;
+  background-color: #C5821F;
+  border-color: #C5821F;
+}
+
+.my-shows-move-right-button {
+  margin-top: 3em;
+  height: 5em;
+  margin-right: 1em;
+  font-size: 30px;
+  background-color: #C5821F;
+  border-color: #C5821F;
+}
+
+.my-shows-media-holder {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+
+.my-shows-sort-button {
+  margin-top: 0.5em;
+  background-color: #C5821F;
+  border-color: #C5821F;
+  font-size: 30px;
+  margin-bottom: 3em;
+}
+
+.my-shows-sorting {
+  margin-top: 1em;
+  margin-left: 40%;
+  margin-right: 40%;
+  background-color: #C5821F;
+  margin-bottom: 3em;
+}
+
+.my-shows-radio-button {
+  margin-top: 0.2em;
+}
+
+.my-shows-close-button {
+  margin-top: 0.2em;
+}
+
+
+
