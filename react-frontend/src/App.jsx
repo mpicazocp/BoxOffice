@@ -1,13 +1,13 @@
 import React from 'react';
-import HomePage from "./HomePage";
-
+// import HomePage from "./HomePage";
+import AccountCreation from "./AccountCreation"
 
 function App() {
 
 
   return (
     <div className="App">
-      <HomePage/>
+      <AccountCreation/>
     </div>
   );
 }
