@@ -52,15 +52,34 @@ exports.addUser = async function addUser(user) {
   }
 };
 
-exports.patchUserMedia = async function addMedia(userId, mediaId) {
+exports.patchUser = async function modUser(userId, patchObj) {
   try {
     const userToPatch = await UserModel.findById(userId);
-    if (mediaId) {
-      // remove existing media document reference
-      userToPatch.media_list = userToPatch.media_list.filter(({ medId }) => medId !== mediaId);
-    } else {
-      // add new media document reference
-      userToPatch.media_list.push(mediaId);
+    const newEmail = patchObj['email'];
+    if (newEmail) {
+      // change email
+      userToPatch.email = newEmail;
+    }
+    const newPswd = patchObj['password'];
+    if (newPswd) {
+      // change password
+      userToPatch.password = newPswd;
+    }
+    const newMedia = patchObj['media_list'];
+    if (newMedia) {
+      // add/remove media document references
+      for (let i = 0; i < newMedia.length; i++) {
+        if (userToPatch.media_list.includes(newMedia[i])) {
+          // remove existing media document reference
+          const index = userToPatch.media_list.indexOf(newMedia[i]);
+          if (index > -1) {
+            userToPatch.media_list.splice(index, 1);
+          }
+        } else {
+          // add new media document reference
+          userToPatch.media_list.push(newMedia[i]);
+        }
+      }
     }
     const savedUser = await userToPatch.save();
     return savedUser;
