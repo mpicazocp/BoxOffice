@@ -3,7 +3,7 @@ import axios from 'axios'
 import "./AccountCreation.css"
 
 function AccountCreation() {
-
+  // create states for all necessary variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPasword, setConfirmPasword] = useState("");
@@ -11,8 +11,8 @@ function AccountCreation() {
     emailInvalid: false,
     passwordsDontMatch: false,
   });
-
   
+  // validity functions
   const checkFieldsValid = () => email.length !== 0 && password.length !== 0 && confirmPasword.length !== 0
   const checkEmailValid = () => /.+@.+\.[A-Za-z]+$/.test(email); // Complicated regex. Don't worry about it...
 
@@ -28,13 +28,13 @@ function AccountCreation() {
   }, [email, password, confirmPasword])
 
    // use axios to post to the backend
-  async function addUser(newEmail, newPassword) {
+  async function addUser(userToPost) {
     try {
-      const response = await axios.post('http//localhost:5000/users', {email : newEmail, password : newPassword, media_list: []});
+      const response = await axios.post('http://localhost:5000/users', userToPost);
       return response;
     }
     catch (error) {
-      console.log(error);
+      console.error(error.response.data);
       return false;
     }
   };
@@ -43,16 +43,16 @@ function AccountCreation() {
     if (errors.emailInvalid || errors.passwordsDontMatch) { return; }
 
     // consider doing a check here to see if email already exists
+    
 
     // send a post request to add the new user
-    addUser(email, password);
-
-    // ask sam about applying a link here
-
-    console.debug("email:", email);
-    console.debug("password:", password);
-    console.debug("confirmPasword:", confirmPasword);
-    
+    addUser({email, password}).then(result => {
+      if (result && result.status === 201)
+        console.log("post succesful");
+        // Add a route to the my shows page here **********************
+      else
+        console.log("Account Creation Failed");
+    });
   };
 
 

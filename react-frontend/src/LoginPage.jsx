@@ -4,15 +4,19 @@ import axios from 'axios'
 
 function UserLogin() {
 
+  // initialize states for email and password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [users, setUsers] = useState([]);           // this will hold all the users
   const [errors, setErrors] = useState({
-    emailInvalid: false, emailNotFound: false, incorrectPassword: false
+    emailInvalid: false, emailNotFound: false, incorrectPassword: false, 
   });
   
+  // check to ensure the values are legitimate
   const checkFieldsValid = () => email.length !== 0 && password.length !== 0;
   const checkEmailValid = () => /.+@.+\.[A-Za-z]+$/.test(email); // Complicated regex. Don't worry about it...
-  
+
+    // useEffect block to update the error variables
     useEffect(() => {
     if (!checkFieldsValid()) return;
 
@@ -21,13 +25,13 @@ function UserLogin() {
       if (email !== "" && !checkEmailValid()) { err.emailInvalid = true; }
       
     setErrors(err);
-  }, [email, password])
-
-
-  // use axios to fetch all users, maybe should fetch only what we need?
+    }, [email, password])
+  
+  
+  // use axios to fetch all users from the backend->database
   async function fetchUsers() {
     try {
-      const response = await axios.get('http//localhost:5000/users');
+      const response = await axios.get('http://localhost:5000/users');
       return response.data.users_list;
     }
     catch (error) {
@@ -36,28 +40,40 @@ function UserLogin() {
     }
   };
 
+  // this is used to fetch all the users into an array to be used to check later
+  useEffect(() => {
+        fetchUsers().then( result => {
+           if (result)
+              setUsers(result);
+         });
+     }, [] );
+
   const loginButtonSubmitted = () => {
+    // ensure submitted characters are legitimate
     if (!checkFieldsValid()) return;
     if (errors.emailInvalid) return;
 
-    // make a get request then filter the users for the inputted email
-    const AllUsers = fetchUsers();
-    console.debug("email being compared: ", email.toLowerCase);
-    const requestedUser = AllUsers.filter(user => user.email.toLowerCase === email.toLowerCase);
+    // set email to lower case as it does not need be case sensitive
+    email.toLowerCase();
 
-    // if array is empty, user does not exist
-    // consider settting a variable here to let ui know to display message
-    if (requestedUser.length <= 0) return;
+    let flag = 0;
+    // iterate through each user and check emails and passwords with submitted
+    users.forEach((user) => {
+      
+      if (user.email.toLowerCase() === email) {
+        if (user.password === password) {
+          flag = 1;                                 // for debugging purposes
+          // add link to the my shows page here         *************************
+        }
+      }
+    });
 
-    if (requestedUser.password !== password) return;
-
-    // submit login and move to next page?
-    // might also need to send login data over to the next page somehow?
-    console.debug("email:", email);
-    console.debug("password:", password);
+    // for debugging only
+    if (flag === 0)
+      console.debug("Incorrect Email or Password");
+    else
+      console.debug("Successfully logged in");
   };
-
-  
 
 
   return (
