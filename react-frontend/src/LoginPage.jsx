@@ -26,6 +26,7 @@ function UserLogin() {
       if (email !== "" && !checkEmailValid()) { err.emailInvalid = true; }
       
     setErrors(err);
+<<<<<<< HEAD
     }, [email, password])
   
   // use axios to fetch all users from the backend->database
@@ -38,6 +39,12 @@ function UserLogin() {
       console.log(error);
       return false;
     }
+=======
+    if (err.emailInvalid) { return; }
+    console.debug("logged in");
+
+    // DO SOMETHING
+>>>>>>> ce1fd481acb79a655261ef09a40a4aa6a41b61af
   };
 
   // this is used to fetch all the users into an array to be used to check later
