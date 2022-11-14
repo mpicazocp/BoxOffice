@@ -4,28 +4,22 @@
 }
 
 .homeButton {
-    width: 70px;
-    height: 60px;
+    width: 7%;
+    height: 10%;
     font-size: 15px;
     color:black;
     background-color: #872b2f;
-    /* border-color: #0c0000; */
     border: 2px solid black;
     border-radius: 5px;
     margin-left: 2em;
     margin-top: 1em;
     margin-bottom: 7em;
-    text-align: center;
-
 }
 
 .header {
-
-    /* font-size: 100 px; */
     color: white;
     display: flex;
     flex-direction: column;
-    justify-content: right;
     background: #A13237;
     
 }
