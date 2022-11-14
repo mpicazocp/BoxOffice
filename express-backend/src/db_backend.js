@@ -23,8 +23,9 @@ app.get('/', async (req, res) => {
 app.get('/users', async (req, res) => {
   const email = req.query['email'];
   const pwsd = req.query['password'];
+  const medList = req.query['media_list'];
   try {
-    const result = await userServices.getUsers(email, pwsd);
+    const result = await userServices.getUsers(email, pwsd, medList);
     res.send({ users_list: result });
   } catch (error) {
     console.log(error);
@@ -88,8 +89,10 @@ app.get('/media', async (req, res) => {
   const type = req.query['content_type'];
   const genre = req.query['genre'];
   const strmSrv = req.query['strm_srv'];
+  const instCnt = req.query['instance_count'];
+  const avgRun = req.query['avg_runtime_mins'];
   try {
-    const result = await mediaServices.getMedia(name, type, genre, strmSrv);
+    const result = await mediaServices.getMedia(name, type, genre, strmSrv, instCnt, avgRun);
     res.send({ media_list: result });
   } catch (error) {
     console.log(error);
