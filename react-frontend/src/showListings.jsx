@@ -15,13 +15,18 @@ function ListingsPage(){
 
     return (
         <div className="listings-page-parent">
-            <button className="homeButton" type="submit" onClick={HomeButtonSubmit}>HOME</button>
-            <h1 className= "header">Results</h1>
-            <div className= "listings" style={{ marginTop: 20, width: 800 }}>
+            
+            <h1 className= "header">
+                <button className="homeButton" type="submit" onClick={HomeButtonSubmit}>HOME</button>
+                <div className= "headerTxt">Search Results</div>
+            </h1>
+            <div className= "listings" style={{ marginTop: 50, marginLeft:80,  width: 800, height:900}}>
                 <Paragraph style={{ marginTop: 30 }} 
                             graph="image" rows={3} />
                 <Paragraph style={{ marginTop: 40 }} 
-                            graph="image" rows={3} />
+                            graph="image" rows={4} />
+                <Paragraph style={{ marginTop: 40 }} 
+                            graph="image" rows={5} />
                 <Paragraph style={{ marginTop: 40 }} 
                             graph="image" rows={3} />
             </div>
