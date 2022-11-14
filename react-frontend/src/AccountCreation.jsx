@@ -27,12 +27,6 @@ function AccountCreation() {
     setErrors(err);
   }, [email, password, confirmPasword])
 
-<<<<<<< HEAD
-  const goButtonSubmitted = () => {
-    if (errors.emailInvalid || errors.passwordsDontMatch) { return; }
-
-    // DO SOMETHING
-=======
    // use axios to post to the backend
   async function addUser(userToPost) {
     try {
@@ -43,7 +37,6 @@ function AccountCreation() {
       console.error(error.response.data);
       return false;
     }
->>>>>>> link-front-and-back
   };
 
   const goButtonSubmitted = () => {

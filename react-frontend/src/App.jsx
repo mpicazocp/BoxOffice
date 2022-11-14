@@ -8,7 +8,6 @@ import MyShows from "./MyShows";
 
 function App() {
 
-
   return (
     <div className='App'>
       <BrowserRouter basename='/'>
