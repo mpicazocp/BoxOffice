@@ -16,7 +16,7 @@ mongoose
     {
       useNewUrlParser: true, // useFindAndModify: false,
       useUnifiedTopology: true,
-    }
+    },
   )
   .catch((error) => console.log(error));
 
@@ -57,7 +57,8 @@ exports.patchUserMedia = async function addMedia(userId, mediaId) {
     const userToPatch = await UserModel.findById(userId);
     if (mediaId) {
       // remove existing media document reference
-      userToPatch.media_list = userToPatch.media_list.filter(({ medId }) => medId !== mediaId);
+      userToPatch.media_list = userToPatch.media_list.filter(({ medId }) =>
+          medId !== mediaId);
     } else {
       // add new media document reference
       userToPatch.media_list.push(mediaId);
