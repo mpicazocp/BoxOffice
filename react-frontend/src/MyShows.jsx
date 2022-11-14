@@ -144,7 +144,7 @@ function MyShows() {
           <div className="my-shows-office"><span className="my-shows-box">Box</span>Office</div>
         </div>
         <div className="my-shows-search-parent">
-          <input type="search" className="my-shows-searchbar" placeholder="Search"/>
+          <input type="search" className="my-shows-searchbar" placeholder="Filter"/>
         </div>
       </div>
       <div className="my-shows-text">My Shows</div>

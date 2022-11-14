@@ -21,6 +21,7 @@ function UserLogin() {
 
     setErrors(err);
     if (err.emailInvalid) { return; }
+    console.debug("logged in");
 
     // DO SOMETHING
   };

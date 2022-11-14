@@ -28,8 +28,8 @@ function AccountCreation() {
 
   const goButtonSubmitted = () => {
     if (errors.emailInvalid || errors.passwordsDontMatch) { return; }
-
     // DO SOMETHING
+    console.debug("submitted");
   };
 
   return (
