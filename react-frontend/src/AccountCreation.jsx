@@ -40,19 +40,19 @@ function AccountCreation() {
   };
 
   const goButtonSubmitted = () => {
-    if (errors.emailInvalid || errors.passwordsDontMatch) { return; }
+    if (errors.emailInvalid || errors.passwordsDontMatch) { ; }
 
     // consider doing a check here to see if email already exists
-    
-
-    // send a post request to add the new user
-    addUser({email, password}).then(result => {
-      if (result && result.status === 201)
-        console.log("post succesful");
+    else {
+      // send a post request to add the new user
+      addUser({ email, password }).then(result => {
+        if (result && result.status === 201)
+          console.log("post successful");
         // Add a route to the my shows page here **********************
-      else
-        console.log("Account Creation Failed");
-    });
+        else
+          console.log("Account Creation Failed");
+      });
+    }
   };
 
 

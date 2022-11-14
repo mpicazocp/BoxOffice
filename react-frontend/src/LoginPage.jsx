@@ -9,8 +9,9 @@ function UserLogin() {
   const [password, setPassword] = useState("");
   const [users, setUsers] = useState([]);           // this will hold all the users
   const [errors, setErrors] = useState({
-    emailInvalid: false, emailNotFound: false, incorrectPassword: false, 
+    emailInvalid: false, emailNotFound: false, incorrectPassword: false,
   });
+  let flag = 0;
   
   // check to ensure the values are legitimate
   const checkFieldsValid = () => email.length !== 0 && password.length !== 0;
@@ -21,12 +22,11 @@ function UserLogin() {
     if (!checkFieldsValid()) return;
 
     // Pulled out err to a seperate variables because setState is async. Causes race condition
-    const err = { emailInvalid: false, emailNotFound: false, incorrectPassword: false};
+    const err = { emailInvalid: false, emailNotFound: false, incorrectPassword: false, wrongLogin: true};
       if (email !== "" && !checkEmailValid()) { err.emailInvalid = true; }
       
     setErrors(err);
     }, [email, password])
-  
   
   // use axios to fetch all users from the backend->database
   async function fetchUsers() {
@@ -50,29 +50,29 @@ function UserLogin() {
 
   const loginButtonSubmitted = () => {
     // ensure submitted characters are legitimate
-    if (!checkFieldsValid()) return;
-    if (errors.emailInvalid) return;
-
-    // set email to lower case as it does not need be case sensitive
-    email.toLowerCase();
-
-    let flag = 0;
-    // iterate through each user and check emails and passwords with submitted
-    users.forEach((user) => {
+    if (!checkFieldsValid() || errors.emailInvalid) { ; }
+  
+    else {
+      // set email to lower case as it does not need be case sensitive
+      email.toLowerCase();
+      // iterate through each user and check emails and passwords with submitted
+      users.forEach((user) => {
       
-      if (user.email.toLowerCase() === email) {
-        if (user.password === password) {
-          flag = 1;                                 // for debugging purposes
-          // add link to the my shows page here         *************************
+        if (user.email.toLowerCase() === email) {
+          if (user.password === password) {
+            flag = 1;
+            // add link to the my shows page here         *************************
+          }
         }
-      }
-    });
+      });
+    }
 
     // for debugging only
     if (flag === 0)
       console.debug("Incorrect Email or Password");
     else
       console.debug("Successfully logged in");
+    flag = 0;
   };
 
 
