@@ -46,15 +46,16 @@ function AccountCreation() {
     else {
       // send a post request to add the new user
       addUser({ email, password }).then(result => {
-        if (result && result.status === 201)
+        if (result && result.status === 201) {
           console.log("post successful");
+        }
         // Add a route to the my shows page here **********************
-        else
+        else {
           console.log("Account Creation Failed");
+        }
       });
     }
   };
-
 
   return (
     <div className="account-creation-page-parent">
