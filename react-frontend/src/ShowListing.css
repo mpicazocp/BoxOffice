@@ -1,11 +1,9 @@
 
-.listings-page-parent {
-    background-color: rgb(227, 220, 211);
-}
+html {background-color: #A13237}
 
 .homeButton {
     width: 7%;
-    height: 10%;
+    /* height: 1em; */
     font-size: 15px;
     color:black;
     background-color: #872b2f;
@@ -28,20 +26,34 @@
     position:absolute;
     top:100px;    
     left:100px; 
-
 }
 
 .listings {
-    
-    
     font-size: 50 px;
     color: black;
-    background-color: rgb(227, 220, 211);
 }
 
-/* .title {
-    font-size: 150px;
-    color: black;
-    border: solid 15px;
-    border-image:   linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
-} */
+.listingParent {
+    display: flex;
+    align-items: center;
+    margin-left: 5em;
+    margin-top: 2.5em;
+    margin-bottom: 2.5em;
+    margin-right: 5em;
+    border: solid #C5821F 1em;
+    background-color: #C5821F;
+    padding: 1em;
+}
+
+.listingImage {
+  width: 20em;
+  height: 20em;
+  border: solid #C5821F 7px;
+  background-color: #C5821F;
+}
+
+.listingText {
+    margin-left: 1em;
+    font: 55px;
+}
+

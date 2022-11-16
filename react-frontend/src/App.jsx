@@ -5,6 +5,7 @@ import AccountCreation from './AccountCreation';
 import LoginPage from './LoginPage';
 import HomePage from "./HomePage";
 import MyShows from "./MyShows";
+import ShowListing from "./ShowListing";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <BrowserRouter basename='/'>
         <Routes>
           <Route path='/' element={<HomePage />} />
+          <Route path='/search' element={<ShowListing />} />
           <Route path='/newAccount' element={<AccountCreation />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/myShows' element={<MyShows />} />

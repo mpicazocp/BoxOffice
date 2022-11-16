@@ -1,14 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
 import "./HomePage.css"
 
-
 function HomePage() {
 
+    const [searchInput, setSearchInput] = useState("");
+
+    const navigate = useNavigate();
+
     const SearchButtonSubmit = () => {
-        // console.debug("Congrats!");
+        console.debug(searchInput);
+        navigate(`/search?name=${searchInput}`);
     };
     const LoginButtonSubmit = () => {
         // console.debug("Congrats!");
@@ -29,7 +33,7 @@ function HomePage() {
             </div>
             <div className="title"><span className="test">Box</span>Office</div>
             <div className = "searchbox">
-                <SearchBar/>
+                <SearchBar searchInput={searchInput} setSearchInput={setSearchInput}/>
                 <button className="searchButton" type="submit" onClick={SearchButtonSubmit}>SEARCH</button>
             </div>
           
