@@ -64,3 +64,8 @@ input-box-error {
     border-color: #C5821F;
     margin-top: 40px;
 }
+
+.buttonLoginText {
+    color: white;
+    font-size: 20px;
+}
