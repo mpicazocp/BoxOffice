@@ -3,11 +3,16 @@ import axios from 'axios'
 import MediaDisplay from './MediaDisplay'
 
 import "./MyShows.css"
+import useLoginToken from './useLoginToken'
 
 function MyShows() {
 
+  // retrieve the currently logged in user
+  const [loginToken] = useLoginToken();
+
   // this value will hold the current logged in user
-  // const [user, setUser] = useState("");
+  const [allUsers, setAllUsers] = useState();
+  const [user, setUser] = useState();
 
   const [mediaList, setMediaList] = useState([]);
   const [index, setIndex] = useState({start: 0, end: 3});
@@ -15,10 +20,20 @@ function MyShows() {
   const [sortingSelection, setSortingSelection] = useState("");
   const typesOfSorts = ["A-Z", "Z-A", "Streaming Service"];
 
+   // use axios to fetch all users from the backend->database
+  async function fetchUsers() {
+    try {
+      const response = await axios.get('http://localhost:5000/users');
+      return response.data.users_list;
+    }
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
 
-
+  // retrieve a media object by ID using axios
   async function getMedia(mediaId) {
-
     try {
       const urlWithId = `http://localhost:5000/media/${mediaId}`;
       const response = await axios.get(urlWithId);
@@ -31,12 +46,25 @@ function MyShows() {
      return false;
     }
   }
+
   // Run on page load
   useEffect(() => {
-    // Async get media list at some point
+
+    // fetch all users
+    fetchUsers().then( result => {
+           if (result)
+              setAllUsers(result);
+    });
+    
+    // iterate through all users and set current user using token
+    allUsers.forEach((allUser) => {
+      if (allUser.media.toLowerCase() === loginToken.email.toLowerCase) {
+        setUser(user);
+      }
+    });
 
     // For each media item in the user's list, iterate through and add to mediaList
-    // eslint-disable-next-line no-undef
+
     user.media_list.forEach((mediaId) => {
       const response = getMedia(mediaId);
       if (response) {
@@ -44,7 +72,6 @@ function MyShows() {
       }
     })
     
-
     // setMediaList(
       // [ 
     //     {
@@ -93,7 +120,6 @@ function MyShows() {
   // next check if the get Media is iterating and fetching correctly, then process that list and display
   // 
 
-  
 
   function getSortedMediaList() {
     const temp = [...mediaList];
