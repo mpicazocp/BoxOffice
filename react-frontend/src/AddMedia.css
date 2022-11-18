@@ -1,6 +1,12 @@
 
 html {background-color: #A13237}
 
+.show-info-parent {
+    display: flex;
+    margin-left: 5%;
+    margin-top: 1%;
+}
+
 .image-and-button {
     display: flex;
     flex-direction: column;
@@ -8,16 +14,19 @@ html {background-color: #A13237}
 }
 
 .save-button {
+    border: solid #C5821F 0.5em;
+    background-color: #C5821F;
     margin-top: 1em;
-    width: 90%;
+    width: 50%;
     height: 3em;
 }
 
-.show-info-parent {
-    display: flex;
-    margin-left: 5%;
-    margin-top: 1%;
-    /* width: 10%; */
+.save-button-error {
+    border: solid #F44336 0.5em;
+    background-color: #F44336;
+    margin-top: 1em;
+    width: 50%;
+    height: 3em;
 }
 
 .show-info-img {
@@ -29,6 +38,7 @@ html {background-color: #A13237}
 
 .edit-media-select {
     width: 100%;
+    margin-left: 1em;
 }
 
 .show-info-text {
@@ -37,7 +47,7 @@ html {background-color: #A13237}
   justify-content: space-between;
 }
 
-.testtest {
+.show-information-detail-text {
     width: 25em;
 }
 

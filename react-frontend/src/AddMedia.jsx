@@ -5,13 +5,13 @@ import "./AddMedia.css"
 
 function AddMedia (props) {
 
-    const { title, img, desc, streamingService, isMovie, currentSeason, currentEpisode, currentHours, currentMinutes } = props;
+    const { name, img, desc, streamingService, contentType, currentSeason, currentEpisode, currentHours, currentMinutes } = props;
     const [media, setMedia] = useState({
-        title,
+        name,
         img,
         desc,
         streamingService,
-        isMovie,
+        contentType,
         currentSeason,
         currentEpisode,
         currentHours,
@@ -21,32 +21,29 @@ function AddMedia (props) {
     const streamingServices = ["Netflix", "Amazon", "Hulu"];
 
     const validateMedia = () => {
-        if (media.isMovie === undefined) return false;
-        if (media.isMovie){
+        if (media.contentType === undefined) return false;
+        if (media.contentType === "Movie"){
             return Object.keys(media).every(key => (media[key] !== undefined && media[key] !== "") || (key === "currentSeason" || key === "currentEpisode"));
         }
         return Object.keys(media).every(key => media[key] !== undefined && media[key] !== "");
     }
 
     const submitNewMedia = () => {
+        console.debug(media);
         if (!validateMedia()) return;
-        if (media.isMovie){
+        if (media.contentType === "Movie"){
             media.currentSeason = null;
             media.currentEpisode = null;
         }
         // Make API CALL
     }
 
-    return (
-        <div className="show-info-parent">
-            <div className="image-and-button">
-                <img src={media.img} alt={media.title} className="show-info-img"/>
-                { validateMedia() && <button className="save-button" type="submit" onClick={submitNewMedia}>{ media.isMovie ? "Add Movie" : "Add Series" }</button> }
-            </div>
+    function infoText() {
+        return (
             <div className="show-info-text">
-                <div className="show-info-detail-title">Name: <div className="show-info-detail">{media.title}</div></div>
+                <div className="show-info-detail-title">Name: <div className="show-info-detail">{media.name}</div></div>
                 <div className="show-info-detail-title">Desc: <div className="show-info-detail">{media.desc}</div></div>
-                <div className="testtest">
+                <div className="show-information-detail-text">
                     <div className="show-info-detail-title">Streaming Service:
                         <Select
                             className="edit-media-select"
@@ -60,19 +57,19 @@ function AddMedia (props) {
                         <Select
                             className="edit-media-select"
                             defaultValue={
-                                media.isMovie !== undefined &&
-                                (media.isMovie ? {label: "Movie", value: "Movie"} : {label: "Series", value: "Series"})
+                                media.contentType !== undefined &&
+                                (media.contentType === "Movie" ? {label: "Movie", value: "Movie"} : {label: "Series", value: "Series"})
                             }
                             options={["Movie", "Series"].map( v => ({"label" : v, "value" : v}))}
-                            onChange={ e => setMedia({...media, isMovie: e.value === "Movie"})}
+                            onChange={ e => setMedia({...media, contentType: e.value})}
                         />
-                        { media.isMovie !== undefined && 
+                        { media.contentType !== undefined && 
                         <div className="editMediaTime">
-                            {!media.isMovie &&
+                            {media.contentType === "Series" &&
                                 <div className="editMediaShowTime">Season
                                     <input className="editMediaInput" placeholder="Season" defaultValue={media.currentSeason} onChange={e => setMedia({...media, currentSeason: e.target.value})} />
                                 </div>}
-                            {!media.isMovie &&
+                            {media.contentType === "Series" &&
                                 <div className="editMediaShowTime">Episode
                                     <input className="editMediaInput" placeholder="Episode" defaultValue={media.currentEpisode} onChange={e => setMedia({...media, currentEpisode: e.target.value})} />
                                 </div>}
@@ -83,6 +80,22 @@ function AddMedia (props) {
                     </div>
                 </div>
             </div>
+        );
+    };
+
+    return (
+        <div className="show-info-parent">
+            <div className="image-and-button">
+                <img src={media.img} alt={media.name} className="show-info-img"/>
+                <button
+                    className={ validateMedia() ? "save-button": "save-button-error"}
+                    type="submit"
+                    onClick={submitNewMedia}
+                >
+                    { media.contentType === "Movie" ? "Add Movie" : "Add Series" }
+                </button>
+            </div>
+            {infoText()}
         </div>
     );
 }
