@@ -93,7 +93,7 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "test": "prettier --eslint .",
+    "test": "prettier .",
     "lint": "eslint \"**/*.{js,jsx}\"",
     "dev": "nodemon db_backend.js",
     "start": "node db_backend.js",
