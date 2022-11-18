@@ -13,6 +13,6 @@
     "rules": {
       "react/prop-types": 0,
       "react/react-in-jsx-scope": "off",
-      "linebreak-style": ["error", "unix"] // change 'windows' to 'unix' if not on Windows OS
+      "linebreak-style": ["error", "windows"] // change 'windows' to 'unix' if not on Windows OS
     }
 }
