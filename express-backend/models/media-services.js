@@ -16,14 +16,19 @@ mongoose
     {
       useNewUrlParser: true, // useFindAndModify: false,
       useUnifiedTopology: true,
-    },
+    }
   )
   .catch((error) => console.log(error));
 
-exports.getMedia = async function getMedia(name, type, genre, strmSrv) {
+exports.getMedia = async function getMedia(name, type, genre, strmSrv, rating) {
   let result;
-  if (name === undefined && type === undefined &&
-          genre === undefined && strmSrv === undefined) {
+  if (
+    name === undefined &&
+    type === undefined &&
+    genre === undefined &&
+    strmSrv === undefined &&
+    rating === undefined
+  ) {
     result = await MediaModel.find();
   } else if (name) {
     result = await MediaModel.find({ name: name });
@@ -33,6 +38,8 @@ exports.getMedia = async function getMedia(name, type, genre, strmSrv) {
     result = await MediaModel.find({ genre: genre });
   } else if (strmSrv) {
     result = await MediaModel.find({ strm_srv: strmSrv });
+  } else if (rating) {
+    result = await MediaModel.find({ rating: rating });
   }
   return result;
 };

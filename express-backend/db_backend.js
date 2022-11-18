@@ -4,8 +4,8 @@
 const express = require('express');
 const cors = require('cors');
 
-const userServices = require('../models/user-services');
-const mediaServices = require('../models/media-services');
+const userServices = require('./models/user-services');
+const mediaServices = require('./models/media-services');
 
 const app = express();
 const port = 5000;
@@ -20,6 +20,7 @@ app.get('/users', async (req, res) => {
   const pwsd = req.query['password'];
   try {
     const result = await userServices.getUsers(email, pwsd);
+    console.log(result);
     res.send({ users_list: result });
   } catch (error) {
     console.log(error);
@@ -79,8 +80,9 @@ app.get('/media', async (req, res) => {
   const type = req.query['content_type'];
   const genre = req.query['genre'];
   const strmSrv = req.query['strm_srv'];
+  const rating = req.query['rating'];
   try {
-    const result = await mediaServices.getMedia(name, type, genre, strmSrv);
+    const result = await mediaServices.getMedia(name, type, genre, strmSrv, rating);
     res.send({ media_list: result });
   } catch (error) {
     console.log(error);
@@ -121,6 +123,7 @@ app.delete('/media/:id', async (req, res) => {
 
 /* ########################### end media requests ###########################*/
 
+module.exports = app;
 app.listen(process.env.PORT || port, () => {
   if (process.env.PORT) {
     console.log(`REST API is listening on port: ${process.env.PORT}.`);
