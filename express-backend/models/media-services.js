@@ -16,13 +16,14 @@ mongoose
     {
       useNewUrlParser: true, // useFindAndModify: false,
       useUnifiedTopology: true,
-    }
+    },
   )
   .catch((error) => console.log(error));
 
 exports.getMedia = async function getMedia(name, type, genre, strmSrv) {
   let result;
-  if (name === undefined && type === undefined && genre === undefined && strmSrv === undefined) {
+  if (name === undefined && type === undefined &&
+          genre === undefined && strmSrv === undefined) {
     result = await MediaModel.find();
   } else if (name) {
     result = await MediaModel.find({ name: name });

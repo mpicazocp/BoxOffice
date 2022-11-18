@@ -6,6 +6,8 @@ This is the development repository for the BoxOffice application.
 
 [![Backend](https://github.com/mpicazocp/BoxOffice/actions/workflows/backend.yml/badge.svg?branch=main&ci-cd)](https://github.com/mpicazocp/BoxOffice/actions/workflows/backend.yml)
 
+[![Deployment](https://github.com/mpicazocp/BoxOffice/actions/workflows/main_boxofficecsc307.yml/badge.svg?branch=main&ci-cd)](https://github.com/mpicazocp/BoxOffice/actions/workflows/main_boxofficecsc307.yml)
+
 ### Style Guides
 For frontend work, use the AirBnB JavaScript React style guide: https://airbnb.io/javascript/react/ <br />
 For backend work, use the Google JavaScript style guide: https://google.github.io/styleguide/jsguide.html

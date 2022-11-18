@@ -30,6 +30,11 @@ html {
     margin-left: 2em;
     margin-top: 1em;
 }
+
+.buttonText {
+  color: white;
+}
+
 .createButton {
     width: 100px;
     height: 70px;
