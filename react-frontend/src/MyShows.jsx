@@ -3,15 +3,12 @@ import axios from 'axios'
 import MediaDisplay from './MediaDisplay'
 
 import "./MyShows.css"
-import useLoginToken from './useLoginToken'
+
 
 function MyShows() {
 
-  // retrieve the currently logged in user
-  const [loginToken] = useLoginToken();
-
   // this value will hold the current logged in user
-  const [allUsers, setAllUsers] = useState();
+  const [allUsers, setAllUsers] = useState([]);
   const [user, setUser] = useState();
 
   const [mediaList, setMediaList] = useState([]);
@@ -46,22 +43,31 @@ function MyShows() {
      return false;
     }
   }
+   // this is used to fetch all the users into an array to be used to check later
+  useEffect(() => {
+        fetchUsers().then( result => {
+           if (result)
+              setAllUsers(result);
+         });
+     }, [] );
 
   // Run on page load
   useEffect(() => {
 
-    // fetch all users
-    fetchUsers().then( result => {
-           if (result)
-              setAllUsers(result);
-    });
-    
+    // retrieve the currently logged in user
+    const tokenString = sessionStorage.getItem('email');
+    const loginToken = JSON.parse(tokenString);
+    console.log("email: ", loginToken?.email);
+
+ 
     // iterate through all users and set current user using token
     allUsers.forEach((allUser) => {
-      if (allUser.media.toLowerCase() === loginToken.email.toLowerCase) {
+      if (allUser.media.toLowerCase() === loginToken) {
         setUser(user);
       }
     });
+
+    console.log("user:", user);
 
     // For each media item in the user's list, iterate through and add to mediaList
 
@@ -71,6 +77,8 @@ function MyShows() {
         setMediaList((current) => [...current, response]);
       }
     })
+
+    console.log("mediaList", mediaList);
     
     // setMediaList(
       // [ 
