@@ -1,0 +1,47 @@
+
+.listings-page-parent {
+    background-color: rgb(227, 220, 211);
+}
+
+.homeButton {
+    width: 7%;
+    height: 10%;
+    font-size: 15px;
+    color:black;
+    background-color: #872b2f;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin-left: 2em;
+    margin-top: 1em;
+    margin-bottom: 7em;
+}
+
+.header {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    background: #A13237;
+    
+}
+.headerTxt {
+    font-size: 55px;
+    position:absolute;
+    top:100px;    
+    left:100px; 
+
+}
+
+.listings {
+    
+    
+    font-size: 50 px;
+    color: black;
+    background-color: rgb(227, 220, 211);
+}
+
+/* .title {
+    font-size: 150px;
+    color: black;
+    border: solid 15px;
+    border-image:   linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
+} */

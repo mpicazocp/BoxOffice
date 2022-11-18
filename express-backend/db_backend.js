@@ -4,8 +4,8 @@
 const express = require('express');
 const cors = require('cors');
 
-const userServices = require('../models/user-services');
-const mediaServices = require('../models/media-services');
+const userServices = require('./models/user-services');
+const mediaServices = require('./models/media-services');
 
 const app = express();
 const port = 5000;
@@ -92,6 +92,7 @@ app.get('/media', async (req, res) => {
   const instCnt = req.query['instance_count'];
   const avgRun = req.query['avg_runtime_mins'];
   try {
+    // eslint-disable-next-line max-len
     const result = await mediaServices.getMedia(name, type, genre, strmSrv, instCnt, avgRun);
     res.send({ media_list: result });
   } catch (error) {
