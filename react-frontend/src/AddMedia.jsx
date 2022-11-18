@@ -5,7 +5,7 @@ import "./AddMedia.css"
 
 function AddMedia (props) {
 
-    const { title, img, desc, streamingService, isMovie, currentSeason, currentEpisode, currentHours, currentMinuites } = props;
+    const { title, img, desc, streamingService, isMovie, currentSeason, currentEpisode, currentHours, currentMinutes } = props;
     const [media, setMedia] = useState({
         title,
         img,
@@ -15,7 +15,7 @@ function AddMedia (props) {
         currentSeason,
         currentEpisode,
         currentHours,
-        currentMinuites
+        currentMinutes
     });
 
     const streamingServices = ["Netflix", "Amazon", "Hulu"];
@@ -77,7 +77,7 @@ function AddMedia (props) {
                                     <input className="editMediaInput" placeholder="Episode" defaultValue={media.currentEpisode} onChange={e => setMedia({...media, currentEpisode: e.target.value})} />
                                 </div>}
                             <div className="editMediaShowTime">Hours<input className="editMediaInput" placeholder="Hours" defaultValue={media.currentHours} onChange={e => setMedia({...media, currentHours: e.target.value})} /></div>
-                            <div className="editMediaShowTime">Minuites<input className="editMediaInput" placeholder="Minuites" defaultValue={media.currentMinuites} onChange={e => setMedia({...media, currentMinuites: e.target.value})} /></div>
+                            <div className="editMediaShowTime">Minutes<input className="editMediaInput" placeholder="Minutes" defaultValue={media.currentMinutes} onChange={e => setMedia({...media, currentMinutes: e.target.value})} /></div>
                         </div>
                         }
                     </div>
