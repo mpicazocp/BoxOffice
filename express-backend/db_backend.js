@@ -13,13 +13,19 @@ const port = 5000;
 app.use(cors());
 app.use(express.json());
 
+app.get('/', async (req, res) => {
+  // eslint-disable-next-line max-len
+  res.send('Welcome to the BoxOffice database. Navigate to /users or /media for access to our collections.');
+});
+
 /* ########################## begin user requests ###########################*/
 
 app.get('/users', async (req, res) => {
   const email = req.query['email'];
   const pwsd = req.query['password'];
+  const medList = req.query['media_list'];
   try {
-    const result = await userServices.getUsers(email, pwsd);
+    const result = await userServices.getUsers(email, pwsd, medList);
     res.send({ users_list: result });
   } catch (error) {
     console.log(error);
@@ -58,11 +64,15 @@ app.delete('/users/:id', async (req, res) => {
   }
 });
 
-// update media_list for user
+// to update media_list for user, take as input a
+// JSON object containing a media_list attribute
+// containing the ID of the media object(s) that
+// is(are) to be added/removed to the user's media_list
 app.patch('/users/:id', async (req, res) => {
   const userId = req.params['id'];
-  const mediaId = req.body;
-  const savedUser = await userServices.patchUserMedia(userId, mediaId);
+  const patchObj = req.body;
+  console.log(patchObj);
+  const savedUser = await userServices.patchUser(userId, patchObj);
   if (savedUser) {
     res.status(200).end();
   } else {
@@ -79,8 +89,11 @@ app.get('/media', async (req, res) => {
   const type = req.query['content_type'];
   const genre = req.query['genre'];
   const strmSrv = req.query['strm_srv'];
+  const instCnt = req.query['instance_count'];
+  const avgRun = req.query['avg_runtime_mins'];
   try {
-    const result = await mediaServices.getMedia(name, type, genre, strmSrv);
+    // eslint-disable-next-line max-len
+    const result = await mediaServices.getMedia(name, type, genre, strmSrv, instCnt, avgRun);
     res.send({ media_list: result });
   } catch (error) {
     console.log(error);
@@ -123,6 +136,6 @@ app.delete('/media/:id', async (req, res) => {
 
 app.listen(process.env.PORT || port, () => {
   if (process.env.PORT) {
-    console.log(`REST API is listening on port: ${process.env.PORT}.`);
-  } else console.log(`REST API is listening on port: ${port}.`);
+    console.log(`REST API on Atlas is listening on port: ${process.env.PORT}.`);
+  } else console.log(`REST API is listening on local port: ${port}.`);
 });

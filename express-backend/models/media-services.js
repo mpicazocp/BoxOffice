@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable indent */
@@ -16,14 +17,20 @@ mongoose
     {
       useNewUrlParser: true, // useFindAndModify: false,
       useUnifiedTopology: true,
-    },
+    }
   )
   .catch((error) => console.log(error));
 
-exports.getMedia = async function getMedia(name, type, genre, strmSrv) {
+exports.getMedia = async function getMedia(name, type, genre, strmSrv, instCnt, avgRun) {
   let result;
-  if (name === undefined && type === undefined &&
-          genre === undefined && strmSrv === undefined) {
+  if (
+    name === undefined &&
+    type === undefined &&
+    genre === undefined &&
+    strmSrv === undefined &&
+    instCnt === undefined &&
+    avgRun === undefined
+  ) {
     result = await MediaModel.find();
   } else if (name) {
     result = await MediaModel.find({ name: name });
@@ -33,13 +40,17 @@ exports.getMedia = async function getMedia(name, type, genre, strmSrv) {
     result = await MediaModel.find({ genre: genre });
   } else if (strmSrv) {
     result = await MediaModel.find({ strm_srv: strmSrv });
+  } else if (instCnt) {
+    result = await MediaModel.find({ instance_count: instCnt });
+  } else if (avgRun) {
+    result = await MediaModel.find({ avg_runtime_mins: avgRun });
   }
   return result;
 };
 
 exports.findMediaById = async function findMediaById(id) {
   try {
-    return await mediaModel.findById(id);
+    return await MediaModel.findById(id);
   } catch (error) {
     console.log(error);
     return undefined;
