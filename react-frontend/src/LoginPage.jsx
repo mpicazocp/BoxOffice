@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import "./LoginPage.css"
 import axios from 'axios'
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-function UserLogin() {
+import "./LoginPage.css"
 
+function UserLogin({ setLoginToken }) {
+  
   // initialize states for email and password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [users, setUsers] = useState([]);           // this will hold all the users
   const [errors, setErrors] = useState({
     emailInvalid: false, emailNotFound: false, incorrectPassword: false,
-  });
-  let flag = 0;
+  }); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   // check to ensure the values are legitimate
   const checkFieldsValid = () => email.length !== 0 && password.length !== 0;
@@ -60,21 +63,16 @@ function UserLogin() {
       
         if (user.email.toLowerCase() === email) {
           if (user.password === password) {
-            flag = 1;
-            // add link to the my shows page here         *************************
+            
+            // this ensures that the user's data is accesible from other paths 
+            setLoginToken(email);
+            setIsLoggedIn(true);
+            
           }
         }
       });
     }
-
-    // for debugging only
-    if (flag === 0)
-      console.debug("Incorrect Email or Password");
-    else
-      console.debug("Successfully logged in");
-    flag = 0;
-  };
-
+  }
 
   return (
     <div className="login-page-parent">
@@ -88,9 +86,20 @@ function UserLogin() {
       <div className="login-page-password-input">
         <input className="input-box" type="password" name="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
       </div>
-      <button className="loginButton" type="submit" onClick={loginButtonSubmitted}>Login</button>
+      <button className="loginButton" type="submit" onClick={loginButtonSubmitted}>
+      {isLoggedIn &&
+        <Link className="buttonLoginText" to='/myShows'>Login</Link>
+        }
+      {!isLoggedIn &&
+        <Link className="buttonLoginText" to='/login'>Login</Link>
+      }
+        </button>
     </div>
   );
 };
+
+UserLogin.propTypes = {
+  setLoginToken: PropTypes.func.isRequired
+}
 
 export default UserLogin;
