@@ -5,7 +5,6 @@ import AccountCreation from './AccountCreation';
 import LoginPage from './LoginPage';
 import HomePage from "./HomePage";
 import MyShows from "./MyShows";
-import AddMedia from "./AddMedia";
 
 function App() {
 
@@ -17,8 +16,6 @@ function App() {
           <Route path='/newAccount' element={<AccountCreation />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/myShows' element={<MyShows />} />
-          <Route path='/addMedia' element={<AddMedia name = "Shrek" img="https://upload.wikimedia.org/wikipedia/en/7/7b/Shrek_%282001_animated_feature_film%29.jpg" desc="swamp swampswamp swampswamp swampswamp swampswamp swampswamp swampswamp swampswamp swampswamp swampswamp swampswamp swampswamp swamp"/>} />
-          <Route path='/addMedia1' element={<AddMedia name = "Shrek" img="https://upload.wikimedia.org/wikipedia/en/7/7b/Shrek_%282001_animated_feature_film%29.jpg" desc="swamp" streamingService="Netflix" contentType="Movie" currentHours={1} currentMinutes={13}/>} />
         </Routes>
       </BrowserRouter>
     </div>
