@@ -35,12 +35,12 @@ html {background-color: #A13237}
   flex-direction: column;
 }
 
-.input-box {
+.input-box-new-account {
   font-size: 50px;
   margin-top: 0.25em;
 }
 
-.input-box-error {
+.input-box-error-new-account {
   font-size: 50px;
   margin-top: 0.25em;
   border: solid red 7px;
