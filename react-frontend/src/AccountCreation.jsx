@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import "./AccountCreation.css"
 
-function AccountCreation() {
+function AccountCreation({ setLoginToken }) {
   // create states for all necessary variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,6 +12,8 @@ function AccountCreation() {
     emailInvalid: false,
     passwordsDontMatch: false,
   });
+
+  const navigate = useNavigate();
   
   // validity functions
   const checkFieldsValid = () => email.length !== 0 && password.length !== 0 && confirmPasword.length !== 0
@@ -48,6 +51,8 @@ function AccountCreation() {
       addUser({ email, password }).then(result => {
         if (result && result.status === 201) {
           console.log("post successful");
+            setLoginToken(email);
+            navigate('/');
         }
         // Add a route to the my shows page here **********************
         else {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import "./LoginPage.css"
 
@@ -14,7 +14,7 @@ function UserLogin({ setLoginToken }) {
   const [errors, setErrors] = useState({
     emailInvalid: false, emailNotFound: false, incorrectPassword: false,
   }); 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
   
   // check to ensure the values are legitimate
   const checkFieldsValid = () => email.length !== 0 && password.length !== 0;
@@ -66,8 +66,7 @@ function UserLogin({ setLoginToken }) {
             
             // this ensures that the user's data is accesible from other paths 
             setLoginToken(email);
-            setIsLoggedIn(true);
-            
+            navigate('/');
           }
         }
       });
@@ -86,14 +85,7 @@ function UserLogin({ setLoginToken }) {
       <div className="login-page-password-input">
         <input className="input-box" type="password" name="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
       </div>
-      <button className="loginButton" type="submit" onClick={loginButtonSubmitted}>
-      {isLoggedIn &&
-        <Link className="buttonLoginText" to='/myShows'>Login</Link>
-        }
-      {!isLoggedIn &&
-        <Link className="buttonLoginText" to='/login'>Login</Link>
-      }
-        </button>
+      <button className="loginButton" type="submit" onClick={loginButtonSubmitted}>Login</button>
     </div>
   );
 };
