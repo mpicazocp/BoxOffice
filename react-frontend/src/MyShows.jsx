@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+// import { useNavigate, Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -110,7 +111,7 @@ function MyShows() {
     <div className="my-shows-parent">
       <div className="my-shows-header-parent">
         <div className="my-shows-box-office-parent">
-          <div className="my-shows-office"><span className="my-shows-box">Box</span>Office</div>
+        <button className="my-shows-button" type="button" onClick={() => navigate("/")}><span className="my-shows-box">Box</span>Office</button>
         </div>
         <div className="my-shows-search-parent">
           <input type="search" className="my-shows-searchbar" placeholder="Filter"/>

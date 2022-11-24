@@ -64,7 +64,7 @@ function AccountCreation({ setLoginToken }) {
 
   return (
     <div className="account-creation-page-parent">
-      <div className="title"><span className="test">Box</span>Office</div>
+      <button type="button" className="account-creation-title" onClick={() => navigate("/")}><span className="test">Box</span>Office</button>
       <div className="account-creation-email-input">
         <input className={!errors.emailInvalid ? "input-box-new-account" : "input-box-error-new-account"} type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
         { errors.emailInvalid && 

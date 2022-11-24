@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import "./SearchResults.css"
 
 function SearchResults(){
 
+    const navigate = useNavigate();
     const queryParameters = new URLSearchParams(window.location?.search)
 
     const [mediaResults, setMediaResults] = useState([]);
@@ -29,10 +30,10 @@ function SearchResults(){
 
     return (
        <div className="listings-page-parent">
-            <h1 className= "header">
-                <Link className="homeButton" type="submit" to='/'>HOME</Link>
+            <div className="listings-page-header">
+                <button className="homeButton" type="button" onClick={() => navigate("/")}><span className="my-shows-box">Box</span>Office</button>
                 <div className= "headerTxt">Search Results</div>
-            </h1>
+            </div>
             {mediaResults.map( m => 
                 <div key={m.name} className="listingParent">
                     <img className="listingImage" src={m.image} alt={m.image}/>

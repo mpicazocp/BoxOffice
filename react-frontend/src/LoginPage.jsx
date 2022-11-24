@@ -79,7 +79,7 @@ function UserLogin({ setLoginToken }) {
 
   return (
     <div className="login-page-parent">
-      <div className="title"><span className="test">Box</span>Office</div>
+      <button type="button" className="login-page-title" onClick={() => navigate("/")}><span className="test">Box</span>Office</button>
       <div className="login-page-email-input">
         <input className={!errors.emailInvalid ? "input-box" : "input-box-error"} type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
         { errors.emailInvalid && <div className="invalid">Email is Invalid</div> }

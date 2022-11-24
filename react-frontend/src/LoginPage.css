@@ -41,19 +41,12 @@ html {
     font-size: 40pt;
 }
 
-/* .invalid { */
-/*   font-size: 50pt; */
-/*   color: red; */
-/*   border: solid red 10px; */
-/*   border-color: blue; */
-/*   background-color: yellow; */
-/* } */
-
-.title {
+.login-page-title {
     font-size: 10em;
     color: black;
     border: solid 15px;
     border-image: linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
+    background-color: #A13237
 }
 
 .loginButton {

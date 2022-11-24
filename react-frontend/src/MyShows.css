@@ -29,11 +29,12 @@ html {background-color: #A13237}
   color: white;
 }
 
-.my-shows-office {
+.my-shows-button {
   font-size: 45px;
   color: black;
   border: solid 5px;
   border-image:   linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
+  background-color: #A13237;
 }
 
 .my-shows-text {
