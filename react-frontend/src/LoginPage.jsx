@@ -65,7 +65,8 @@ function UserLogin({ setLoginToken }) {
           if (user.password === password) {
             
             // this ensures that the user's data is accesible from other paths 
-            setLoginToken(email);
+            /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+            setLoginToken(user._id);
             navigate('/');
           }
         }

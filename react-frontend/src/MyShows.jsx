@@ -1,15 +1,17 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import MediaDisplay from './MediaDisplay'
 
+import useLoginToken from './useLoginToken';
+
+import MediaDisplay from './MediaDisplay'
 import "./MyShows.css"
 
 
 function MyShows() {
 
-  // this value will hold the current logged in user
-  const [allUsers, setAllUsers] = useState([]);
-  const [user, setUser] = useState();
+    const navigate = useNavigate();
+  const { getLoginToken } = useLoginToken();
 
   const [mediaList, setMediaList] = useState([]);
   const [index, setIndex] = useState({start: 0, end: 3});
@@ -17,11 +19,10 @@ function MyShows() {
   const [sortingSelection, setSortingSelection] = useState("");
   const typesOfSorts = ["A-Z", "Z-A", "Streaming Service"];
 
-   // use axios to fetch all users from the backend->database
-  async function fetchUsers() {
+  async function fetchMedia(id) {
     try {
-      const response = await axios.get('http://localhost:5000/users');
-      return response.data.users_list;
+      const response = await axios.get(`http://localhost:5000/media/${id}`);
+      return response.data.media_list;
     }
     catch (error) {
       console.log(error);
@@ -29,152 +30,48 @@ function MyShows() {
     }
   };
 
-  // retrieve a media object by ID using axios
-  async function getMedia(mediaId) {
-    try {
-      const urlWithId = `http://localhost:5000/media/${mediaId}`;
-      const response = await axios.get(urlWithId);
-     console.log(response.data);
-
-     return response.data;
-    }
-   catch (error) {
-     console.log(error);
-     return false;
-    }
-  }
-   // this is used to fetch all the users into an array to be used to check later
-  useEffect(() => {
-        fetchUsers().then( result => {
-           if (result)
-              setAllUsers(result);
-         });
-     }, [] );
-
   // Run on page load
   useEffect(() => {
+    const loginToken = getLoginToken();
+    if (loginToken === null) navigate('/');
 
-    // retrieve the currently logged in user
-    const tokenString = sessionStorage.getItem('email');
-    const loginToken = JSON.parse(tokenString);
-    console.log("email: ", loginToken?.email);
-
- 
-    // iterate through all users and set current user using token
-    allUsers.forEach((allUser) => {
-      if (allUser.media.toLowerCase() === loginToken) {
-        setUser(user);
-      }
-    });
-
-    console.log("user:", user);
-
-    // For each media item in the user's list, iterate through and add to mediaList
-
-    user.media_list.forEach((mediaId) => {
-      const response = getMedia(mediaId);
-      if (response) {
-        setMediaList((current) => [...current, response]);
-      }
-    })
-
-    console.log("mediaList", mediaList);
-    
-    // setMediaList(
-      // [ 
-    //     {
-    //       name: "Shrek",
-    //       rating: "PG-13",
-    //       img: "https://upload.wikimedia.org/wikipedia/en/7/7b/Shrek_%282001_animated_feature_film%29.jpg",
-    //       streamingService: "Peacock"
-    //     },
-    //     {
-    //       name: "Shrek 2",
-    //       rating: "PG-13",
-    //       img: "https://upload.wikimedia.org/wikipedia/en/b/b9/Shrek_2_poster.jpg",
-    //       streamingService: "Peacock"
-    //     },
-    //     {
-    //       name: "Shrek 3",
-    //       rating: "R",
-    //       img: "https://upload.wikimedia.org/wikipedia/en/2/22/Shrek_the_Third_%282007_animated_feature_film%29.jpg",
-    //       streamingService: "N/A"
-    //     },
-    //     {
-    //       name: "Shrek 4: the one that everybody forgot",
-    //       rating: "R",
-    //       img: "https://upload.wikimedia.org/wikipedia/en/7/70/Shrek_Forever_After_%282010_animated_feature_film%29.jpg",
-    //       streamingService: "Hulu"
-    //     },
-    //     {
-    //       name: "Zapped",
-    //       rating: "PG",
-    //       img: "https://upload.wikimedia.org/wikipedia/en/9/91/Zapped_2014_Poster.jpg",
-    //       streamingService: "Pluto"
-    //     },
-    //     {
-    //       name: "After Earth",
-    //       rating: "PG",
-    //       img: "https://upload.wikimedia.org/wikipedia/en/5/5b/After_Earth_Poster.jpg",
-    //       streamingService: "Prime Video"
-    //     }
-    //   ]
-    // );
+    axios.get(`http://localhost:5000/users/${loginToken}`)
+      .then(response => {
+        const userMedias = response.data.users_list.media_list;
+        return Promise.all(userMedias.map(id => fetchMedia(id)));
+      })
+      .then(responseArray => {
+        setMediaList(responseArray);
+      })
+      .catch(error => console.log(error.response));
+    setMediaList([]);
   }, [])
-
-
-  // Where I left off: need to get the user infor passed along to each page: session cookie or props
-  // Need to make sure the media list can be accessed from the passed in user
-  // next check if the get Media is iterating and fetching correctly, then process that list and display
-  // 
-
 
   function getSortedMediaList() {
     const temp = [...mediaList];
-    if (sortingSelection === "A-Z") {
-      temp.sort((a,b) => {
-        const fa = a.name.toLowerCase();
-        const fb = b.name.toLowerCase();
-
-        if (fa < fb) {
-            return -1;
+    temp.sort((a,b) => {
+        let fa;
+        let fb;
+        switch (sortingSelection) {
+            case "A-Z":
+                fa = a.name.toLowerCase();
+                fb = b.name.toLowerCase();
+                break;
+            case "Z-A":
+                fa = b.name.toLowerCase();
+                fb = a.name.toLowerCase();
+                break;
+            case "Streaming Service":
+                fa = a.strm_srv.toLowerCase();
+                fb = b.strm_srv.toLowerCase();
+                break;
+            default: break;
         }
-        if (fa > fb) {
-            return 1;
-        }
+        if (fa < fb) return -1;
+        if (fa > fb) return  1;
         return 0;
-      });
-    }
-    else if (sortingSelection === "Z-A") {
-      temp.sort((a,b) => {
-        const fa = a.name.toLowerCase();
-        const fb = b.name.toLowerCase();
-
-        if (fa < fb) {
-            return 1;
-        }
-        if (fa > fb) {
-            return -1;
-        }
-        return 0;
-      });
-    }
-    else if (sortingSelection === "Streaming Service") {
-      temp.sort((a,b) => {
-        const fa = a.streamingService.toLowerCase();
-        const fb = b.streamingService.toLowerCase();
-
-        if (fa < fb) {
-            return -1;
-        }
-        if (fa > fb) {
-            return 1;
-        }
-        return 0;
-      });
-    }
-
-    return temp
+    })
+    return temp;
   }
 
   function moveMediaListLeft(){

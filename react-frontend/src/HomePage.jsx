@@ -13,7 +13,7 @@ function HomePage() {
     const [ search, setSearch ] = useState("");
 
     useEffect(() => {
-        setLoggedIn(sessionStorage.getItem('email') !== null);
+        setLoggedIn(sessionStorage.getItem('id') !== null);
     }, [])
 
     const SearchButtonSubmit = () => {
