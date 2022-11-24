@@ -47,14 +47,14 @@ html {
 }
 
 .createButton {
-    width: 100px;
+    width: 150px;
     height: 70px;
-    font-size: 15px;
+    font-size: 25px;
     color:aliceblue;
     background-color: #000000;
     border-color: #0c0000;
     margin-left: 2em;
-    margin-top: 1em;
+    margin-top: 0.5em;
 }
 
 .searchbox{
