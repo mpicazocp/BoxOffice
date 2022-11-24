@@ -33,6 +33,7 @@ function HomePage() {
         <div className="home-page-parent">
             { loggedIn 
             ?   <div className = "buttons">
+                    { loggedIn && <button type="button" className="myShowsButton" onClick={myShowsClicked} >My Shows</button> }
                     <button className="loginButton" type="submit" onClick={logoutButtonSubmit}>
                       <div className="buttonText" to='/'>LOGOUT</div>
                     </button>
@@ -51,7 +52,6 @@ function HomePage() {
                 <SearchBar search={search} setSearch={setSearch}/>
                 <button className="searchButton" type="submit" onClick={SearchButtonSubmit}><span className="buttonText" >SEARCH</span></button>
             </div>
-                { loggedIn && <button type="button" className="myShowsButton" onClick={myShowsClicked} >My Shows</button> }
           
         </div>
     );
