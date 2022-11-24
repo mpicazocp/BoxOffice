@@ -70,7 +70,6 @@ function UserLogin({ setLoginToken }) {
           }
         }
         else {
-            console.debug("Error");
             setErrors({...errors, emailNotFound:true});
         }
       });
