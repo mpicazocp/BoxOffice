@@ -25,7 +25,7 @@ function UserLogin({ setLoginToken }) {
     if (!checkFieldsValid()) return;
 
     // Pulled out err to a seperate variables because setState is async. Causes race condition
-    const err = { emailInvalid: false, emailNotFound: false, incorrectPassword: false, wrongLogin: true};
+    const err = { emailInvalid: false, emailNotFound: false, incorrectPassword: false};
       if (email !== "" && !checkEmailValid()) { err.emailInvalid = true; }
       
     setErrors(err);
@@ -69,6 +69,10 @@ function UserLogin({ setLoginToken }) {
             navigate('/');
           }
         }
+        else {
+            console.debug("Error");
+            setErrors({...errors, emailNotFound:true});
+        }
       });
     }
   }
@@ -78,13 +82,12 @@ function UserLogin({ setLoginToken }) {
       <div className="title"><span className="test">Box</span>Office</div>
       <div className="login-page-email-input">
         <input className={!errors.emailInvalid ? "input-box" : "input-box-error"} type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
-        { errors.emailInvalid && 
-          <div className="invalid">Email is Invalid</div>
-        }
+        { errors.emailInvalid && <div className="invalid">Email is Invalid</div> }
       </div>
       <div className="login-page-password-input">
         <input className="input-box" type="password" name="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
       </div>
+      { errors.emailNotFound && <div className="invalid">Email Not Found OR Password incorrect </div> }
       <button className="loginButton" type="submit" onClick={loginButtonSubmitted}>Login</button>
     </div>
   );
