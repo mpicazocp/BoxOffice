@@ -50,8 +50,8 @@ function AccountCreation({ setLoginToken }) {
       // send a post request to add the new user
       addUser({ email, password }).then(result => {
         if (result && result.status === 201) {
-          console.log("post successful");
-            setLoginToken(email);
+            /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+            setLoginToken(result.data._id);
             navigate('/');
         }
         // Add a route to the my shows page here **********************

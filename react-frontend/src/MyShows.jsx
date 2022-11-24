@@ -117,14 +117,19 @@ function MyShows() {
         </div>
       </div>
       <div className="my-shows-text">My Shows</div>
-      <div className="my-shows-media-holder">
-        <button type="button" onClick={moveMediaListLeft} className="my-shows-move-left-button">&lt;</button>
-        {getSortedMediaList().slice(index.start, index.end).map(media => 
-          <MediaDisplay key={media.name} name={media.name}  streamingService={media.strm_srv}/>
-        )}
-        <button type="button" onClick={moveMediaListRight} className="my-shows-move-right-button">&gt;</button>
-      </div>
-      {conditionalButton()}
+      { mediaList.length === 0 
+       ? <div className="my-shows-no-media">No Media To Display!</div>
+       : <div>
+            <div className="my-shows-media-holder">
+                <button type="button" onClick={moveMediaListLeft} className="my-shows-move-left-button">&lt;</button>
+                    {getSortedMediaList().slice(index.start, index.end).map(media => 
+                      <MediaDisplay key={media.name} name={media.name}  streamingService={media.strm_srv}/>
+                    )}
+                <button type="button" onClick={moveMediaListRight} className="my-shows-move-right-button">&gt;</button>
+            </div>
+            {conditionalButton()}
+        </div>
+      }
     </div>
   );
 }
