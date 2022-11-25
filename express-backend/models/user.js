@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema(
           }
         },
       },
-      media_list: [],
+      mediaList: [],
     },
     {collection: 'user_list'},
 );

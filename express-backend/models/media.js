@@ -7,7 +7,7 @@ const MediaSchema = new mongoose.Schema(
         required: true,
         trim: true,
       },
-      content_type: {
+      contentType: {
         type: String,
         required: true,
         trim: true,
@@ -17,9 +17,9 @@ const MediaSchema = new mongoose.Schema(
         //   }
         // },
       },
-      instance_count: {
+      instance_count: {  // legacy attribute
         type: Number,
-        required: true,
+        required: false,
         trim: true,
         validate(value) {
           if (value < 1) {
@@ -27,14 +27,14 @@ const MediaSchema = new mongoose.Schema(
           }
         },
       },
-      genre: {
+      genre: {  // legacy attribute
         type: String,
-        required: true,
+        required: false,
         trim: true,
       },
-      avg_runtime_mins: {
+      avg_runtime_mins: { // legacy attribute
         type: Number,
-        required: true,
+        required: false,
         trim: true,
         validate(value) {
           if (value < 1) {
@@ -43,7 +43,17 @@ const MediaSchema = new mongoose.Schema(
           }
         },
       },
-      strm_srv: {
+      streamingService: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      img: {  // img url to be rendered
+        type: String,
+        required: true,
+        trim: false,
+      },
+      desc: { //  description
         type: String,
         required: true,
         trim: true,
