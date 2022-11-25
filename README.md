@@ -1,7 +1,7 @@
 # BoxOffice
 This is the development repository for the BoxOffice application.
 
-### Buttons 
+### Build Badges
 [![Frontend](https://github.com/mpicazocp/BoxOffice/actions/workflows/frontend.js.yml/badge.svg?branch=main&ci-cd)](https://github.com/mpicazocp/BoxOffice/actions/workflows/frontend.js.yml)
 
 [![Backend](https://github.com/mpicazocp/BoxOffice/actions/workflows/backend.yml/badge.svg?branch=main&ci-cd)](https://github.com/mpicazocp/BoxOffice/actions/workflows/backend.yml)
