@@ -67,7 +67,7 @@ app.delete('/users/:id', async (req, res) => {
 // to update mediaList for user, take as input a
 // JSON object containing a mediaList attribute
 // containing JSON objects of the following form:
-// { mediaId: <required, String>, currentSeason: <optional, Number>, 
+// { mediaId: <required, String>, currentSeason: <optional, Number>,
 // currentEpisode: <optional, Number>, currentHours: <required. Number>
 // currentMinutes: <required, Number>}
 app.patch('/users/:id', async (req, res) => {
@@ -78,7 +78,7 @@ app.patch('/users/:id', async (req, res) => {
   if (savedUser) {
     res.status(200).end();
   } else {
-    re.status(500).end();
+    res.status(500).end();
   }
 });
 

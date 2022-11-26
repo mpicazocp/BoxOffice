@@ -16,6 +16,7 @@ mongoose
     {
       useNewUrlParser: true, // useFindAndModify: false,
       useUnifiedTopology: true,
+      // eslint-disable-next-line comma-dangle
     }
   )
   .catch((error) => console.log(error));
@@ -71,16 +72,18 @@ exports.patchUser = async function modUser(userId, patchObj) {
     if (newMedia) {
       // add/remove media document references
       for (let i = 0; i < newMedia.length; i++) {
-        for (let j = 0; j < userToPatch.mediaList.length; j++)  {
+        let found = false;
+        for (let j = 0; j < userToPatch.mediaList.length; j++) {
           if (userToPatch.mediaList[j].mediaId === newMedia[i].mediaId) {
             // modify/remove existing media document reference
-            if (!updateMediaListEntry(userToPatch.mediaList[j], newMedia[i].mediaId)) {
+            if (!updateMediaListEntry(userToPatch, j, newMedia[i])) {
               userToPatch.mediaList.splice(j, 1);
             }
+            found = true;
             break;
           }
         }
-        if (j === userToPatch.mediaList.length) {
+        if (!found) {
           // add new media document reference
           userToPatch.mediaList.push(newMedia[i]);
         }
@@ -94,18 +97,42 @@ exports.patchUser = async function modUser(userId, patchObj) {
 };
 
 // helper function to update specific JSON object in list
-function updateMediaListEntry(oldObj, newObj) {
-  if (oldObj.currentSeason && oldObj.currentSeason != newObj.currentSeason) {
-    oldObj.currentSeason = newObj.currentSeason;
-    return true;
-  } else if (oldObj.currentEpisode && oldObj.currentEpisode != newObj.currentEpisode) {
-    oldObj.currentEpisode = newObj.currentEpisode;
-    return true;
-  } else if (oldObj.currentHours && oldObj.currentHours != newObj.currentHours) {
-    oldObj.currentHours = newObj.currentHours;
-    return true;
-  } else if (oldObj.currentMinutes && oldObj.currentMinutes != newObj.currentMinutes) {
-    oldObj.currentMinutes = newObj.currentMinutes;
+// eslint-disable-next-line require-jsdoc
+function updateMediaListEntry(userToPatch, idx, newObj) {
+  let modify = false;
+  if (
+    userToPatch.mediaList[idx].currentSeason !== undefined &&
+    userToPatch.mediaList[idx].currentSeason != newObj.currentSeason
+  ) {
+    userToPatch.mediaList[idx].currentSeason = newObj.currentSeason;
+    userToPatch.markModified(`mediaList.${idx}.currentSeason`);
+    modify = true;
+  }
+  if (
+    userToPatch.mediaList[idx].currentEpisode !== undefined &&
+    userToPatch.mediaList[idx].currentEpisode != newObj.currentEpisode
+  ) {
+    userToPatch.mediaList[idx].currentEpisode = newObj.currentEpisode;
+    userToPatch.markModified(`mediaList.${idx}.currentEpisode`);
+    modify = true;
+  }
+  if (
+    userToPatch.mediaList[idx].currentHours !== undefined &&
+    userToPatch.mediaList[idx].currentHours != newObj.currentHours
+  ) {
+    userToPatch.mediaList[idx].currentHours = newObj.currentHours;
+    userToPatch.markModified(`mediaList.${idx}.currentHours`);
+    modify = true;
+  }
+  if (
+    userToPatch.mediaList[idx].currentMinutes !== undefined &&
+    userToPatch.mediaList[idx].currentMinutes != newObj.currentMinutes
+  ) {
+    userToPatch.mediaList[idx].currentMinutes = newObj.currentMinutes;
+    userToPatch.markModified(`mediaList.${idx}.currentMinutes`);
+    modify = true;
+  }
+  if (modify) {
     return true;
   } else {
     // if all entries match, delete the pointer JSON object
