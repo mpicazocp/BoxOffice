@@ -11,6 +11,9 @@ This is the development repository for the BoxOffice application.
 ### UI Prototype
 Here is the link to our Figma UI Prototype (last modified on October 27th, 2022): https://www.figma.com/file/2VeI90O1W0TDbL1AnSYx4T/BoxOffice?node-id=0%3A1&t=CyW992dCeruMyrzb-0
 
+### Wikipages
+Here is the link to the BoxOffice wikipage containing our Use Case and UML Class diagrams: https://github.com/mpicazocp/BoxOffice/wiki 
+
 ### Contributing to BoxOffice
 To contribute to BoxOffice development, see the following sections:
 
