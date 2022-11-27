@@ -4,7 +4,7 @@ import "./MediaDisplay.css"
 
 function MediaDisplay(props) {
 
-  const { name, rating, streamingService, img } = props;
+  const { name, desc, streamingService, img } = props;
 
   return (
     <div className="media-display-parent">
@@ -14,8 +14,8 @@ function MediaDisplay(props) {
         alt={img}
       />
       <div className="media-display-title">{name}</div>
-      <div>Rated: {rating}</div>
-      <div>Watch it on: {streamingService}</div>
+      <div>{desc}</div>
+      <div>Watched on: {streamingService}</div>
     </div>
   );
 }
