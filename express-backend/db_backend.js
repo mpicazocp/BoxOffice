@@ -23,7 +23,7 @@ app.get('/', async (req, res) => {
 app.get('/users', async (req, res) => {
   const email = req.query['email'];
   const pwsd = req.query['password'];
-  const medList = req.query['media_list'];
+  const medList = req.query['mediaList'];
   try {
     const result = await userServices.getUsers(email, pwsd, medList);
     res.send({ users_list: result });
@@ -64,10 +64,12 @@ app.delete('/users/:id', async (req, res) => {
   }
 });
 
-// to update media_list for user, take as input a
-// JSON object containing a media_list attribute
-// containing the ID of the media object(s) that
-// is(are) to be added/removed to the user's media_list
+// to update mediaList for user, take as input a
+// JSON object containing a mediaList attribute
+// containing JSON objects of the following form:
+// { mediaId: <required, String>, currentSeason: <optional, Number>,
+// currentEpisode: <optional, Number>, currentHours: <required. Number>
+// currentMinutes: <required, Number>}
 app.patch('/users/:id', async (req, res) => {
   const userId = req.params['id'];
   const patchObj = req.body;
@@ -76,7 +78,7 @@ app.patch('/users/:id', async (req, res) => {
   if (savedUser) {
     res.status(200).end();
   } else {
-    re.status(500).end();
+    res.status(500).end();
   }
 });
 
@@ -86,14 +88,13 @@ app.patch('/users/:id', async (req, res) => {
 
 app.get('/media', async (req, res) => {
   const name = req.query['name'];
-  const type = req.query['content_type'];
-  const genre = req.query['genre'];
-  const strmSrv = req.query['strm_srv'];
-  const instCnt = req.query['instance_count'];
-  const avgRun = req.query['avg_runtime_mins'];
+  const type = req.query['contentType'];
+  const strmSrv = req.query['streamingService'];
+  const img = req.query['img'];
+  const desc = req.query['desc'];
   try {
     // eslint-disable-next-line max-len
-    const result = await mediaServices.getMedia(name, type, genre, strmSrv, instCnt, avgRun);
+    const result = await mediaServices.getMedia(name, type, strmSrv, img, desc);
     res.send({ media_list: result });
   } catch (error) {
     console.log(error);

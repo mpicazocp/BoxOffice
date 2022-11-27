@@ -7,19 +7,20 @@ const MediaSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    content_type: {
+    contentType: {
       type: String,
       required: true,
       trim: true,
-      validate(value) {
-        if (value !== 'series' || value !== 'movie') {
-          throw new Error('Invalid media type.');
-        }
-      },
+      // validate(value) {
+      //   if (value !== 'series' || value !== 'movie') {
+      //     throw new Error('Invalid media type.');
+      //   }
+      // },
     },
     instance_count: {
+      // legacy attribute
       type: Number,
-      required: true,
+      required: false,
       trim: true,
       validate(value) {
         if (value < 1) {
@@ -28,13 +29,15 @@ const MediaSchema = new mongoose.Schema(
       },
     },
     genre: {
+      // legacy attribute
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     avg_runtime_mins: {
+      // legacy attribute
       type: Number,
-      required: true,
+      required: false,
       trim: true,
       validate(value) {
         if (value < 1) {
@@ -43,17 +46,19 @@ const MediaSchema = new mongoose.Schema(
         }
       },
     },
-    strm_srv: {
+    streamingService: {
       type: String,
       required: true,
       trim: true,
     },
     img: {
+      // img url to be rendered
       type: String,
-      required: false,
+      required: true,
       trim: false,
     },
-    rating: {
+    desc: {
+      //  description
       type: String,
       required: true,
       trim: true,

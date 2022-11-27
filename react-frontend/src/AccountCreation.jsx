@@ -61,14 +61,14 @@ function AccountCreation() {
     <div className="account-creation-page-parent">
       <div className="title"><span className="test">Box</span>Office</div>
       <div className="account-creation-email-input">
-        <input className={!errors.emailInvalid ? "input-box" : "input-box-error"} type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
+        <input className={!errors.emailInvalid ? "input-box-new-account" : "input-box-error-new-account"} type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
         { errors.emailInvalid && 
           <div className="invalid">Email is Invalid</div>
         }
       </div>
       <div className="account-creation-password-input">
-        <input className={!errors.passwordsDontMatch ? "input-box" : "input-box-error"} type="password" name="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
-        <input className={!errors.passwordsDontMatch ? "input-box" : "input-box-error"} type="password" name="confirmPassword" placeholder="Confirm Password" onChange={e => setConfirmPasword(e.target.value)}/>
+        <input className={!errors.passwordsDontMatch ? "input-box-new-account" : "input-box-error-new-account"} type="password" name="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+        <input className={!errors.passwordsDontMatch ? "input-box-new-account" : "input-box-error-new-account"} type="password" name="confirmPassword" placeholder="Confirm Password" onChange={e => setConfirmPasword(e.target.value)}/>
         { errors.passwordsDontMatch &&
           <div className="invalid">Passwords don&apos;t match</div>
       }
