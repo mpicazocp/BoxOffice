@@ -16,6 +16,7 @@ mongoose
     {
       useNewUrlParser: true, // useFindAndModify: false,
       useUnifiedTopology: true,
+      // eslint-disable-next-line comma-dangle
     }
   )
   .catch((error) => console.log(error));
@@ -67,19 +68,24 @@ exports.patchUser = async function modUser(userId, patchObj) {
       // change password
       userToPatch.password = newPswd;
     }
-    const newMedia = patchObj['media_list'];
+    const newMedia = patchObj['mediaList'];
     if (newMedia) {
       // add/remove media document references
       for (let i = 0; i < newMedia.length; i++) {
-        if (userToPatch.media_list.includes(newMedia[i])) {
-          // remove existing media document reference
-          const index = userToPatch.media_list.indexOf(newMedia[i]);
-          if (index > -1) {
-            userToPatch.media_list.splice(index, 1);
+        let found = false;
+        for (let j = 0; j < userToPatch.mediaList.length; j++) {
+          if (userToPatch.mediaList[j].mediaId === newMedia[i].mediaId) {
+            // modify/remove existing media document reference
+            if (!updateMediaListEntry(userToPatch, j, newMedia[i])) {
+              userToPatch.mediaList.splice(j, 1);
+            }
+            found = true;
+            break;
           }
-        } else {
+        }
+        if (!found) {
           // add new media document reference
-          userToPatch.media_list.push(newMedia[i]);
+          userToPatch.mediaList.push(newMedia[i]);
         }
       }
     }
@@ -89,6 +95,50 @@ exports.patchUser = async function modUser(userId, patchObj) {
     console.log(error);
   }
 };
+
+// helper function to update specific JSON object in list
+// eslint-disable-next-line require-jsdoc
+function updateMediaListEntry(userToPatch, idx, newObj) {
+  let modify = false;
+  if (
+    userToPatch.mediaList[idx].currentSeason !== undefined &&
+    userToPatch.mediaList[idx].currentSeason != newObj.currentSeason
+  ) {
+    userToPatch.mediaList[idx].currentSeason = newObj.currentSeason;
+    userToPatch.markModified(`mediaList.${idx}.currentSeason`);
+    modify = true;
+  }
+  if (
+    userToPatch.mediaList[idx].currentEpisode !== undefined &&
+    userToPatch.mediaList[idx].currentEpisode != newObj.currentEpisode
+  ) {
+    userToPatch.mediaList[idx].currentEpisode = newObj.currentEpisode;
+    userToPatch.markModified(`mediaList.${idx}.currentEpisode`);
+    modify = true;
+  }
+  if (
+    userToPatch.mediaList[idx].currentHours !== undefined &&
+    userToPatch.mediaList[idx].currentHours != newObj.currentHours
+  ) {
+    userToPatch.mediaList[idx].currentHours = newObj.currentHours;
+    userToPatch.markModified(`mediaList.${idx}.currentHours`);
+    modify = true;
+  }
+  if (
+    userToPatch.mediaList[idx].currentMinutes !== undefined &&
+    userToPatch.mediaList[idx].currentMinutes != newObj.currentMinutes
+  ) {
+    userToPatch.mediaList[idx].currentMinutes = newObj.currentMinutes;
+    userToPatch.markModified(`mediaList.${idx}.currentMinutes`);
+    modify = true;
+  }
+  if (modify) {
+    return true;
+  } else {
+    // if all entries match, delete the pointer JSON object
+    return false;
+  }
+}
 
 exports.findByIdAndDelete = async function findByIdAndDelete(id) {
   try {

@@ -21,29 +21,26 @@ mongoose
   )
   .catch((error) => console.log(error));
 
-exports.getMedia = async function getMedia(name, type, genre, strmSrv, instCnt, avgRun) {
+exports.getMedia = async function getMedia(name, type, strmSrv, img, desc) {
   let result;
   if (
     name === undefined &&
     type === undefined &&
-    genre === undefined &&
     strmSrv === undefined &&
-    instCnt === undefined &&
-    avgRun === undefined
+    img === undefined &&
+    desc === undefined
   ) {
     result = await MediaModel.find();
   } else if (name) {
     result = await MediaModel.find({ name: name });
   } else if (type) {
-    result = await MediaModel.find({ content_type: type });
-  } else if (genre) {
-    result = await MediaModel.find({ genre: genre });
+    result = await MediaModel.find({ contentType: type });
   } else if (strmSrv) {
-    result = await MediaModel.find({ strm_srv: strmSrv });
-  } else if (instCnt) {
-    result = await MediaModel.find({ instance_count: instCnt });
-  } else if (avgRun) {
-    result = await MediaModel.find({ avg_runtime_mins: avgRun });
+    result = await MediaModel.find({ streamingService: strmSrv });
+  } else if (img) {
+    result = await MediaModel.find({ img: img });
+  } else if (desc) {
+    result = await MediaModel.find({ desc: desc });
   }
   return result;
 };
