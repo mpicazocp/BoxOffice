@@ -63,8 +63,8 @@ function MyShows() {
                 fb = a.name.toLowerCase();
                 break;
             case "Streaming Service":
-                fa = a.strm_srv.toLowerCase();
-                fb = b.strm_srv.toLowerCase();
+                fa = a.streamingService.toLowerCase();
+                fb = b.streamingService.toLowerCase();
                 break;
             default: break;
         }
@@ -124,7 +124,7 @@ function MyShows() {
             <div className="my-shows-media-holder">
                 <button type="button" onClick={moveMediaListLeft} className="my-shows-move-left-button">&lt;</button>
                     {getSortedMediaList().slice(index.start, index.end).map(media => 
-                      <MediaDisplay key={media.name} name={media.name}  streamingService={media.strm_srv}/>
+                      <MediaDisplay key={media.name} name={media.name} streamingService={media.streamingService} img={media.img} desc={media.desc}/>
                     )}
                 <button type="button" onClick={moveMediaListRight} className="my-shows-move-right-button">&gt;</button>
             </div>
