@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import "./AccountCreation.css"
 
-function AccountCreation() {
+function AccountCreation({ setLoginToken }) {
   // create states for all necessary variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,6 +12,8 @@ function AccountCreation() {
     emailInvalid: false,
     passwordsDontMatch: false,
   });
+
+  const navigate = useNavigate();
   
   // validity functions
   const checkFieldsValid = () => email.length !== 0 && password.length !== 0 && confirmPasword.length !== 0
@@ -47,7 +50,9 @@ function AccountCreation() {
       // send a post request to add the new user
       addUser({ email, password }).then(result => {
         if (result && result.status === 201) {
-          console.log("post successful");
+            /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+            setLoginToken(result.data._id);
+            navigate('/');
         }
         // Add a route to the my shows page here **********************
         else {
@@ -59,7 +64,7 @@ function AccountCreation() {
 
   return (
     <div className="account-creation-page-parent">
-      <div className="title"><span className="test">Box</span>Office</div>
+      <button type="button" className="account-creation-title" onClick={() => navigate("/")}><span className="test">Box</span>Office</button>
       <div className="account-creation-email-input">
         <input className={!errors.emailInvalid ? "input-box-new-account" : "input-box-error-new-account"} type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
         { errors.emailInvalid && 

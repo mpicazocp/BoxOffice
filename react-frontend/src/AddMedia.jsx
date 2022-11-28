@@ -29,7 +29,6 @@ function AddMedia (props) {
     }
 
     const submitNewMedia = () => {
-        console.debug(media);
         if (!validateMedia()) return;
         if (media.contentType === "Movie"){
             media.currentSeason = null;

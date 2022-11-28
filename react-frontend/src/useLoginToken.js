@@ -2,19 +2,20 @@ import { useState } from 'react';
 
 export default function useLoginToken() {
   const getLoginToken = () => {
-    const tokenString = sessionStorage.getItem('email');
+    const tokenString = sessionStorage.getItem('id');
     const userToken = JSON.parse(tokenString);
-    return userToken?.email;
+    return userToken;
   };
 
   const [loginToken, setLoginToken] = useState(getLoginToken());
 
   const saveLoginToken = (userToken) => {
-    sessionStorage.setItem('email', JSON.stringify(userToken));
-    setLoginToken(userToken.email);
+    sessionStorage.setItem('id', JSON.stringify(userToken));
+    setLoginToken(userToken.id);
   };
 
   return {
+    getLoginToken,
     setLoginToken: saveLoginToken,
     loginToken,
   };
