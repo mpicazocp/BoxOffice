@@ -8,7 +8,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-mongoose.set('debug', true);
+// mongoose.set('debug', true);
 
 mongoose
   .connect(

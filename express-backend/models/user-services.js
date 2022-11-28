@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-mongoose.set('debug', true);
+// mongoose.set('debug', true);
 
 mongoose
   .connect(
@@ -30,7 +30,7 @@ exports.getUsers = async function getUsers(email, pwsd, medList) {
   } else if (pwsd) {
     result = await UserModel.find({ password: pwsd });
   } else if (medList) {
-    result = await UserModel.find({ media_list: medList });
+    result = await UserModel.find({ mediaList: medList });
   }
   return result;
 };
