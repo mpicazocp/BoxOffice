@@ -43,7 +43,7 @@ ESLint and Prettier JavaScript plugins are configured in the remote repository. 
 To access the MongoDB Atlas database from your local repository, do the following: <br />
 ![image](https://user-images.githubusercontent.com/46510323/200495971-e1341336-d400-4800-97e3-fe45e637e525.png)
 
-1. On the BoxOffice Project page on the MongoDB Atlas website, select the 🟨"Database" tab under "Deployment". On this tab, select the 🟧"Connect" button next to the cluster name. Choose "Connect your application", then set the driver and version to "Node.js" and "Version 4.1 or later", respectively. Finally, save the provided connection string. This will be your URI string for the next step. <br /> <br />
+1. On the BoxOffice Project page on the [MongoDB Atlas website](https://cloud.mongodb.com/v2/6350530296a88c42077b2e50#clusters), select the 🟨"Database" tab under "Deployment". On this tab, select the 🟧"Connect" button next to the cluster name. Choose "Connect your application", then set the driver and version to "Node.js" and "Version 4.1 or later", respectively. Finally, save the provided connection string. This will be your URI string for the next step. <br /> <br />
 2. Create a `.env` file in the root of your local `express-backend/` directory. This file should contain the following: <br />
 
 ```
