@@ -14,11 +14,11 @@ are watching it on. Unlike the built-in functionality of streaming services, whi
 
 ### UI Prototype
 
-Here is the link to our Figma UI Prototype (last modified on October 27th, 2022): https://www.figma.com/file/2VeI90O1W0TDbL1AnSYx4T/BoxOffice?node-id=0%3A1&t=CyW992dCeruMyrzb-0
+Here is the link to our Figma UI Prototype (last modified on October 27th, 2022): [Figma Prototype](https://www.figma.com/file/2VeI90O1W0TDbL1AnSYx4T/BoxOffice?node-id=0%3A1&t=CyW992dCeruMyrzb-0)
 
 ### Wikipages
 
-Here is the link to the BoxOffice wikipage containing our Use Case and UML Class diagrams: https://github.com/mpicazocp/BoxOffice/wiki
+Here is the link to the BoxOffice wikipage containing our Use Case and UML Class diagrams: [Wikipage](https://github.com/mpicazocp/BoxOffice/wiki)
 
 ### Contributing to BoxOffice
 
