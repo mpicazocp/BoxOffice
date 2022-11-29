@@ -6,25 +6,29 @@ import "./HomePage.css"
 
 
 function HomePage() {
-
+    // navigate variable
     const navigate = useNavigate();
 
-    const [ loggedIn, setLoggedIn] = useState(false);
-    const [ search, setSearch ] = useState("");
+    const [search, setSearch] = useState("");
 
+    // logged in variable used to decide which components to render
+    const [loggedIn, setLoggedIn] = useState(false);
     useEffect(() => {
         setLoggedIn(sessionStorage.getItem('id') !== null);
     }, [])
 
+    // validates that the search is not empty and routes to the search result
     const SearchButtonSubmit = () => {
         if (search !== "") navigate(`/search?name=${search}`);
     };
 
+    // if logging out, simply set the logged in variable back to false
     const logoutButtonSubmit = () => {
         setLoggedIn(false);
         sessionStorage.clear();
     };
 
+    // simple navigate 
     const myShowsClicked = () => {
         navigate("/myShows");
     }

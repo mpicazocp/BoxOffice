@@ -11,7 +11,9 @@ import "./MyShows.css"
 
 function MyShows() {
 
-    const navigate = useNavigate();
+  // navigate variable
+  const navigate = useNavigate();
+  // import getLoginToken
   const { getLoginToken } = useLoginToken();
 
   const [mediaList, setMediaList] = useState([]);
@@ -20,6 +22,7 @@ function MyShows() {
   const [sortingSelection, setSortingSelection] = useState("");
   const typesOfSorts = ["A-Z", "Z-A", "Streaming Service"];
 
+  // make an axios get for the user's media id's
   async function fetchMedia(id) {
     try {
       const response = await axios.get(`http://localhost:5000/media/${id}`);
@@ -31,11 +34,14 @@ function MyShows() {
     }
   };
 
-  // Run on page load
+  // Run on page load 
   useEffect(() => {
+    // if !logged in, go to home page
     const loginToken = getLoginToken();
     if (loginToken === null) navigate('/');
 
+    // make an axios get for the current user, using their id
+    // then get and set the mediaList from that user
     axios.get(`http://localhost:5000/users/${loginToken}`)
       .then(response => {
         const userMedias = response.data.users_list.media_list;
@@ -48,6 +54,7 @@ function MyShows() {
     setMediaList([]);
   }, [])
 
+  // sort the media objects depending on the option selected
   function getSortedMediaList() {
     const temp = [...mediaList];
     temp.sort((a,b) => {
@@ -75,16 +82,19 @@ function MyShows() {
     return temp;
   }
 
+  // adjust the media List to the left when the user scrolls through media
   function moveMediaListLeft(){
     if (index.start - 1 < 0) return
     setIndex({start: index.start - 1, end: index.end - 1});
   }
 
+  // adjust the media list to the right when the user scrolls through media
   function moveMediaListRight(){
     if (index.end + 1 > mediaList.length) return;
     setIndex({start: index.start + 1, end: index.end + 1});
   }
 
+  // button to determine how the user would like to sort
   function conditionalButton(){
     if (sortingSelection !== ""){
       return (

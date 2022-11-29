@@ -4,7 +4,7 @@ import Select from 'react-select'
 import "./AddMedia.css"
 
 function AddMedia (props) {
-
+    // set values to props
     const { name, img, desc, streamingService, contentType, currentSeason, currentEpisode, currentHours, currentMinutes } = props;
     const [media, setMedia] = useState({
         name,
@@ -18,8 +18,10 @@ function AddMedia (props) {
         currentMinutes
     });
 
+    // list of available streaming services currently
     const streamingServices = ["Netflix", "Amazon", "Hulu"];
 
+    // function to ensure that the media object is valid
     const validateMedia = () => {
         if (media.contentType === undefined) return false;
         if (media.contentType === "Movie"){
@@ -28,6 +30,7 @@ function AddMedia (props) {
         return Object.keys(media).every(key => media[key] !== undefined && media[key] !== "");
     }
 
+    // if media is valid: submit
     const submitNewMedia = () => {
         if (!validateMedia()) return;
         if (media.contentType === "Movie"){

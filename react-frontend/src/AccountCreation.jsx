@@ -4,6 +4,7 @@ import axios from 'axios'
 import "./AccountCreation.css"
 
 function AccountCreation({ setLoginToken }) {
+
   // create states for all necessary variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +14,7 @@ function AccountCreation({ setLoginToken }) {
     passwordsDontMatch: false,
   });
 
+  // create a navigate variable for page-linking upon creation
   const navigate = useNavigate();
   
   // validity functions
@@ -43,18 +45,20 @@ function AccountCreation({ setLoginToken }) {
   };
 
   const goButtonSubmitted = () => {
+    // if wrong user input: do nothing
     if (errors.emailInvalid || errors.passwordsDontMatch) { ; }
 
-    // consider doing a check here to see if email already exists
+    // else post the new user to backend/database
     else {
       // send a post request to add the new user
       addUser({ email, password }).then(result => {
         if (result && result.status === 201) {
+          // if post is succesful, then set the LoginToken as the user's id
             /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
             setLoginToken(result.data._id);
-            navigate('/');
+            navigate('/');                
         }
-        // Add a route to the my shows page here **********************
+        
         else {
           console.log("Account Creation Failed");
         }

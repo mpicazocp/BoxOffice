@@ -4,12 +4,13 @@ import axios from 'axios'
 import "./SearchResults.css"
 
 function SearchResults(){
-
+    // navigate variable
     const navigate = useNavigate();
     const queryParameters = new URLSearchParams(window.location?.search)
 
     const [mediaResults, setMediaResults] = useState([]);
 
+    // fetch the search from the media objects in backend
     async function fetchSearch(name) {
         try {
             const results = await axios.get(`http://localhost:5000/media?name=${name}`);
@@ -21,6 +22,7 @@ function SearchResults(){
         }
     }
 
+    // set media list to the result of the get
     useEffect(() => {
         const name = queryParameters.get('name');
         if (name) {
