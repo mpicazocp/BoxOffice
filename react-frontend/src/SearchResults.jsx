@@ -12,7 +12,7 @@ function SearchResults(){
 
     async function fetchSearch(name) {
         try {
-            const results = await axios.get(`http://localhost:5000/media?name=${name}`);
+            const results = await axios.get(`http://localhost:7777/media?name=${name}`);
             return results?.data?.media_list;
         }
         catch (error) {
