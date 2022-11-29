@@ -53,7 +53,7 @@ function AddMedia (props) {
                     <div className="show-info-detail-title">Streaming Service:
                         <input
                             className="edit-media-streaming-service-select"
-                            defaultValue={ media.streamingService !== undefined && media.streamingService}
+                            defaultValue={ media.streamingService !== undefined ? media.streamingService : ""}
                             onChange={ e => setMedia({...media, streamingService: e.target.value})}
                         />
                     </div>

@@ -4,7 +4,6 @@ import "./MediaDisplay.css"
 
 function MediaDisplay(props) {
 
-  // const { name, desc, streamingService, img, setSavedMedia, setIsOpen } = props;
   const { media, setSavedMedia, setIsOpen } = props;
 
   const openModal = () => {
@@ -21,7 +20,7 @@ function MediaDisplay(props) {
       />
       <div className="media-display-title">{media.name}</div>
       <div>{media.desc}</div>
-      <div>Watched on: {media.streamingService}</div>
+      {media.streamingService && <div>Watched on: {media.streamingService}</div>}
     </button>
   );
 }

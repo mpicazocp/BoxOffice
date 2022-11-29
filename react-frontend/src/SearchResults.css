@@ -28,15 +28,10 @@ html {background-color: #A13237}
 }
 
 .listingParent {
-    display: flex;
-    align-items: center;
+    margin-top: 5em;
+    /* display: flex; */
     margin-left: 5em;
-    margin-top: 2.5em;
-    margin-bottom: 2.5em;
     margin-right: 5em;
-    border: solid #C5821F 1em;
-    background-color: #C5821F;
-    padding: 1em;
 }
 
 .listingImage {

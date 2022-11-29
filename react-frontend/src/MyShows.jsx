@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
-import Modal from 'react-modal';
+import Modal from 'react-modal'
 import axios from 'axios'
 
 import useLoginToken from './useLoginToken';
@@ -209,7 +209,7 @@ function MyShows() {
             <div className="my-shows-media-holder">
                 <button type="button" onClick={moveMediaListLeft} className="my-shows-move-left-button">&lt;</button>
                     {getSortedMediaList().slice(index.start, index.end).map(media => 
-                      <MediaDisplay key={media.name} media={media} setSavedMedia={setSavedMedia} setIsOpen={setIsOpen}/>
+                      <MediaDisplay key={media.name} media={media} name={media.name} desc={media.streamingService} streamingService={media.streamingService} img={media.img} setSavedMedia={setSavedMedia} setIsOpen={setIsOpen}/>
                     )}
                 <button type="button" onClick={moveMediaListRight} className="my-shows-move-right-button">&gt;</button>
             </div>
