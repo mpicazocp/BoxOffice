@@ -22,7 +22,7 @@ function MyShows() {
 
   async function fetchMedia(id) {
     try {
-      const response = await axios.get(`http://localhost:5000/media/${id}`);
+      const response = await axios.get(`http://localhost:7777/media/${id}`);
       return response.data.media_list;
     }
     catch (error) {
@@ -36,7 +36,7 @@ function MyShows() {
     const loginToken = getLoginToken();
     if (loginToken === null) navigate('/');
 
-    axios.get(`http://localhost:5000/users/${loginToken}`)
+    axios.get(`http://localhost:7777/users/${loginToken}`)
       .then(response => {
         const userMedias = response.data.users_list.media_list;
         return Promise.all(userMedias.map(id => fetchMedia(id)));

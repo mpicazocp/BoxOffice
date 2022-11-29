@@ -33,7 +33,7 @@ function AccountCreation({ setLoginToken }) {
    // use axios to post to the backend
   async function addUser(userToPost) {
     try {
-      const response = await axios.post('http://localhost:5000/users', userToPost);
+      const response = await axios.post('http://localhost:7777/users', userToPost);
       return response;
     }
     catch (error) {
