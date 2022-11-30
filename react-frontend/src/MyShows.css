@@ -103,5 +103,12 @@ html {background-color: #A13237}
   margin-top: 0.2em;
 }
 
+.MyShows-Loading {
+    margin-top: 8em;
+    font-size:50px;
+}
 
-
+.my-shows-delete {
+    height: 3em;
+    width: 5em;
+}
