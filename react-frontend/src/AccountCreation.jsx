@@ -8,16 +8,31 @@ function AccountCreation({ setLoginToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPasword, setConfirmPasword] = useState("");
+  const [users, setUsers] = useState([]);
+  const [isDuplicate, setIsDuplicate] = useState(false);
   const [errors, setErrors] = useState({
     emailInvalid: false,
     passwordsDontMatch: false,
   });
+
 
   const navigate = useNavigate();
   
   // validity functions
   const checkFieldsValid = () => email.length !== 0 && password.length !== 0 && confirmPasword.length !== 0
   const checkEmailValid = () => /.+@.+\.[A-Za-z]+$/.test(email); // Complicated regex. Don't worry about it...
+
+  // use axios to fetch all users from the backend->database
+  async function fetchUsers() {
+    try {
+      const response = await axios.get('http://localhost:7777/users');
+      return response.data.users_list;
+    }
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
 
   useEffect(() => {
     if (!checkFieldsValid()) return;
@@ -42,23 +57,47 @@ function AccountCreation({ setLoginToken }) {
     }
   };
 
+  // this is used to fetch all the users into an array to be used to check later
+  useEffect(() => {
+        fetchUsers().then( result => {
+           if (result)
+              setUsers(result);
+         });
+     }, [] );
+
+  let isDuplicateAccount = 0;
   const goButtonSubmitted = () => {
     if (errors.emailInvalid || errors.passwordsDontMatch) { ; }
 
     // consider doing a check here to see if email already exists
     else {
-      // send a post request to add the new user
-      addUser({ email, password }).then(result => {
-        if (result && result.status === 201) {
-            /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-            setLoginToken(result.data._id);
-            navigate('/');
-        }
-        // Add a route to the my shows page here **********************
-        else {
-          console.log("Account Creation Failed");
+      // set the current inputted email to lower case for comparison
+      // compare email and if it is the same, set isDuplicateAccount
+      users.forEach((user) => {
+        if (user.email.toLowerCase() === email.toLowerCase()) {
+          isDuplicateAccount = 1;
+          console.log("same email");
         }
       });
+      
+      if (isDuplicateAccount === 0) {
+        // send a post request to add the new user
+        addUser({ email, password }).then(result => {
+          if (result && result.status === 201) {
+            /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+            setLoginToken(result.data._id); 
+            navigate('/');
+          }
+          // Add a route to the my shows page here **********************
+          else {
+            console.log("Account Creation Failed");
+          }
+        });
+      }
+      else {
+        console.log("username already in use");
+        setIsDuplicate(true);
+      }
     }
   };
 
@@ -79,6 +118,9 @@ function AccountCreation({ setLoginToken }) {
       }
       </div>
       <button className="submitButton" type="submit" onClick={goButtonSubmitted}>GO</button>
+      {isDuplicate &&
+        <div className="invalid">Username Already in Use</div>
+      }
     </div>
   );
 };
