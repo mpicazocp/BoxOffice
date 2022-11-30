@@ -45,3 +45,7 @@ html {background-color: #A13237}
     margin-left: 1em;
     font: 55px;
 }
+
+.searchResults-Loading {
+    font-size: 50px;
+}

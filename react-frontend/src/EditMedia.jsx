@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import Select from 'react-select'
 
+import useLoginToken from './useLoginToken';
+
 import "./EditMedia.css"
 
 function AddMedia (props) {
@@ -17,7 +19,8 @@ function AddMedia (props) {
         currentHours,
         currentMinutes
     });
-
+    const { getLoginToken } = useLoginToken();
+    const loginToken = getLoginToken();
 
     const validateMedia = () => {
         if (media.contentType === undefined) return false;
@@ -91,13 +94,15 @@ function AddMedia (props) {
         <div className="show-info-parent">
             <div className="image-and-button">
                 <img src={media.img} alt={media.name} className="show-info-img"/>
-                <button
-                    className={ validateMedia() ? "save-button": "save-button-error"}
-                    type="submit"
-                    onClick={submitNewMedia}
-                >
-                    Save
-                </button>
+                { loginToken !== null &&
+                    <button
+                        className={ validateMedia() ? "save-button": "save-button-error"}
+                        type="submit"
+                        onClick={submitNewMedia}
+                    >
+                        Save
+                    </button>
+                }
             </div>
             {infoText()}
         </div>

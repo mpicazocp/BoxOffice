@@ -19,7 +19,8 @@ function MyShows() {
   const [index, setIndex] = useState({start: 0, end: 3});
   const [modalIsOpen, setIsOpen] = useState(false);
   const [savedMedia, setSavedMedia] = useState({});
-  // const [saveMediaToBackend, setSaveMediaToBackend] = useState({});
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [sortingSelection, setSortingSelection] = useState("");
   const typesOfSorts = ["A-Z", "Z-A", "Streaming Service"];
@@ -33,6 +34,8 @@ function MyShows() {
                 currentMinutes: mediaMetaData.currentMinutes,
                 currentSeason: mediaMetaData.currentSeason,
                 currentEpisode: mediaMetaData.currentEpisode,
+                contentType: mediaMetaData.contentType,
+                streamingService: mediaMetaData.streamingService
             };
     }
     catch (error) {
@@ -54,8 +57,8 @@ function MyShows() {
       .then(responseArray => {
         setMediaList(responseArray);
       })
+      .then( () => setIsLoading(false) )
       .catch(error => console.log(error.response));
-    // setMediaList([]);
   }, [])
 
   function getSortedMediaList() {
@@ -82,7 +85,6 @@ function MyShows() {
         if (fa > fb) return  1;
         return 0;
     })
-    // console.debug(temp)
     return temp;
   }
 
@@ -171,6 +173,26 @@ function MyShows() {
     // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
     Modal.setAppElement('#root');
 
+    function conditionalOutputRender(){
+        if (isLoading){
+            return <div className="MyShows-Loading">LOADING...</div>
+        }
+
+        if (mediaList.length === 0) {
+            return <div className="my-shows-no-media">No Media To Display!</div>
+        }
+        return <div>
+            <div className="my-shows-media-holder">
+                <button type="button" onClick={moveMediaListLeft} className="my-shows-move-left-button">&lt;</button>
+                    {getSortedMediaList().slice(index.start, index.end).map(media => 
+                      <MediaDisplay key={media.name} media={media} name={media.name} desc={media.streamingService} streamingService={media.streamingService} img={media.img} setSavedMedia={setSavedMedia} setIsOpen={setIsOpen}/>
+                    )}
+                <button type="button" onClick={moveMediaListRight} className="my-shows-move-right-button">&gt;</button>
+            </div>
+            {conditionalButton()}
+        </div>
+    }
+
   return (
     <div className="my-shows-parent">
       <Modal
@@ -203,19 +225,7 @@ function MyShows() {
         </div>
       </div>
       <div className="my-shows-text">My Shows</div>
-      { mediaList.length === 0 
-       ? <div className="my-shows-no-media">No Media To Display!</div>
-       : <div>
-            <div className="my-shows-media-holder">
-                <button type="button" onClick={moveMediaListLeft} className="my-shows-move-left-button">&lt;</button>
-                    {getSortedMediaList().slice(index.start, index.end).map(media => 
-                      <MediaDisplay key={media.name} media={media} name={media.name} desc={media.streamingService} streamingService={media.streamingService} img={media.img} setSavedMedia={setSavedMedia} setIsOpen={setIsOpen}/>
-                    )}
-                <button type="button" onClick={moveMediaListRight} className="my-shows-move-right-button">&gt;</button>
-            </div>
-            {conditionalButton()}
-        </div>
-      }
+        {conditionalOutputRender()}
     </div>
   );
 }
