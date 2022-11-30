@@ -73,7 +73,6 @@ app.delete('/users/:id', async (req, res) => {
 app.patch('/users/:id', async (req, res) => {
   const userId = req.params['id'];
   const patchObj = req.body;
-  console.log(patchObj);
   const savedUser = await userServices.patchUser(userId, patchObj);
   if (savedUser) {
     res.status(200).end();

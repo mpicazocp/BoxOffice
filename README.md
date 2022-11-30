@@ -2,7 +2,7 @@
 
 BoxOffice is a website made for browsers and mobile that allows the user to enter the TV shows
 they are currently watching, what season and episode they are on, and which streaming service they
-are watching it on. Unlike the built-in functionality of streaming services, which save where you currently are, our product allows for multiple people sharing a single service without each user interfering with the watch history/location of the other.
+are watching it on. Unlike the built-in functionality of streaming services, which save the viewing progress of a single (and often shared) account, our product allows for multiple people to share a single service without each user interfering with the watch history/location of the other.
 
 ### Build Badges
 
@@ -43,7 +43,7 @@ ESLint and Prettier JavaScript plugins are configured in the remote repository. 
 To access the MongoDB Atlas database from your local repository, do the following: <br />
 ![image](https://user-images.githubusercontent.com/46510323/200495971-e1341336-d400-4800-97e3-fe45e637e525.png)
 
-1. On the BoxOffice Project page on the MongoDB Atlas website, select the 🟨"Database" tab under "Deployment". On this tab, select the 🟧"Connect" button next to the cluster name. Choose "Connect your application", then set the driver and version to "Node.js" and "Version 4.1 or later", respectively. Finally, save the provided connection string. This will be your URI string for the next step. <br /> <br />
+1. On the BoxOffice Project page on the [MongoDB Atlas website](https://cloud.mongodb.com/v2/6350530296a88c42077b2e50#clusters), select the 🟨"Database" tab under "Deployment". On this tab, select the 🟧"Connect" button next to the cluster name. Choose "Connect your application", then set the driver and version to "Node.js" and "Version 4.1 or later", respectively. Finally, save the provided connection string. This will be your URI string for the next step. <br /> <br />
 2. Create a `.env` file in the root of your local `express-backend/` directory. This file should contain the following: <br />
 
 ```

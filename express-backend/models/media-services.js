@@ -23,13 +23,7 @@ mongoose
 
 exports.getMedia = async function getMedia(name, type, strmSrv, img, desc) {
   let result;
-  if (
-    name === undefined &&
-    type === undefined &&
-    strmSrv === undefined &&
-    img === undefined &&
-    desc === undefined
-  ) {
+  if (name === undefined && type === undefined && strmSrv === undefined && img === undefined && desc === undefined) {
     result = await MediaModel.find();
   } else if (name) {
     result = await MediaModel.find({ name: name });

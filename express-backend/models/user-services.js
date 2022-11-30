@@ -101,6 +101,22 @@ exports.patchUser = async function modUser(userId, patchObj) {
 function updateMediaListEntry(userToPatch, idx, newObj) {
   let modify = false;
   if (
+    userToPatch.mediaList[idx].streamingService !== undefined &&
+    userToPatch.mediaList[idx].streamingService != newObj.streamingService
+  ) {
+    userToPatch.mediaList[idx].streamingService = newObj.streamingService;
+    userToPatch.markModified(`mediaList.${idx}.streamingService`);
+    modify = true;
+  }
+  if (
+    userToPatch.mediaList[idx].contentType !== undefined &&
+    userToPatch.mediaList[idx].contentType != newObj.contentType
+  ) {
+    userToPatch.mediaList[idx].contentType = newObj.contentType;
+    userToPatch.markModified(`mediaList.${idx}.contentType`);
+    modify = true;
+  }
+  if (
     userToPatch.mediaList[idx].currentSeason !== undefined &&
     userToPatch.mediaList[idx].currentSeason != newObj.currentSeason
   ) {

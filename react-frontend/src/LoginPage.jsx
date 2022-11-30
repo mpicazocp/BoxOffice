@@ -34,7 +34,7 @@ function UserLogin({ setLoginToken }) {
   // use axios to fetch all users from the backend->database
   async function fetchUsers() {
     try {
-      const response = await axios.get('http://localhost:5000/users');
+      const response = await axios.get('http://localhost:7777/users');
       return response.data.users_list;
     }
     catch (error) {
