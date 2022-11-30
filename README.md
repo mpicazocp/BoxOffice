@@ -2,7 +2,7 @@
 
 BoxOffice is a website made for browsers and mobile that allows the user to enter the TV shows
 they are currently watching, what season and episode they are on, and which streaming service they
-are watching it on. Unlike the built-in functionality of streaming services, which save where you currently are, our product allows for multiple people sharing a single service without each user interfering with the watch history/location of the other.
+are watching it on. Unlike the built-in functionality of streaming services, which save the viewing progress of a single (and often shared) account, our product allows for multiple people to share a single service without each user interfering with the watch history/location of the other.
 
 ### Build Badges
 
