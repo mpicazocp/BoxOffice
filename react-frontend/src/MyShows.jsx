@@ -37,7 +37,6 @@ function MyShows() {
                 contentType: mediaMetaData.contentType,
                 streamingService: mediaMetaData.streamingService
             };
-      return response.data.media_list;
     }
     catch (error) {
       console.log(error);
