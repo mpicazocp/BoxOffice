@@ -161,6 +161,18 @@ function MyShows() {
     setMediaList(arr);
   }
 
+  const closeModalAndDelete = (media) => {
+    setIsOpen(false);
+    saveMediaDetails(media);
+    const arr = [];
+    mediaList.forEach(m => {
+        if (m._id !== media.id){
+            arr.push(m);
+        }
+    });
+    setMediaList(arr);
+    }
+
   const customStyles = {
       content: {
         width: "50%",
@@ -203,6 +215,7 @@ function MyShows() {
         <EditMedia
             /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
             id={savedMedia._id}
+            isMyShow
             name={savedMedia.name}
             img={savedMedia.img}
             desc={savedMedia.desc}
@@ -213,6 +226,7 @@ function MyShows() {
             currentHours={savedMedia.currentHours}
             currentMinutes={savedMedia.currentMinutes}
             closeModalAndSave={closeModalAndSave}
+            closeModalAndDelete={closeModalAndDelete}
         />
       </Modal>
 
@@ -220,11 +234,8 @@ function MyShows() {
         <div className="my-shows-box-office-parent">
         <button className="my-shows-button" type="button" onClick={() => navigate("/")}><span className="my-shows-box">Box</span>Office</button>
         </div>
-        <div className="my-shows-search-parent">
-          <input type="search" className="my-shows-searchbar" placeholder="Filter"/>
-        </div>
       </div>
-      <div className="my-shows-text">My Shows</div>
+      <div className="my-shows-text">My Shows: {mediaList.length < 3 ? mediaList.length : index.end}/{mediaList.length}</div>
         {conditionalOutputRender()}
     </div>
   );

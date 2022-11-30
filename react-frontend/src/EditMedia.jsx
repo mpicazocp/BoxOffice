@@ -7,7 +7,7 @@ import "./EditMedia.css"
 
 function AddMedia (props) {
 
-    const { id, name, img, desc, streamingService, contentType, currentSeason, currentEpisode, currentHours, currentMinutes, closeModalAndSave } = props;
+    const { id, name, img, desc, streamingService, contentType, currentSeason, currentEpisode, currentHours, currentMinutes, closeModalAndSave, closeModalAndDelete, isMyShow } = props;
     const [media, setMedia] = useState({
         name,
         img,
@@ -45,6 +45,11 @@ function AddMedia (props) {
         else if (Number.isNaN(media.currentSeason) || Number.isNaN(media.currentEpisode) || Number.isNaN(media.currentHours) || Number.isNaN(media.currentMinutes)) return;
         media.id = id;
         closeModalAndSave(media);
+    }
+
+    const deleteMedia = () => {
+        media.id = id;
+        closeModalAndDelete(media);
     }
 
     function infoText() {
@@ -105,6 +110,7 @@ function AddMedia (props) {
                 }
             </div>
             {infoText()}
+            { loginToken !== null && isMyShow !== undefined && <button type="button" className="my-shows-delete" onClick={deleteMedia}>delete</button> }
         </div>
     );
 }
