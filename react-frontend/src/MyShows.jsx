@@ -129,7 +129,10 @@ function MyShows() {
                 currentEpisode: media.currentEpisode,
                 currentSeason: media.currentSeason,
                 currentMinutes: media.currentMinutes,
-                currentHours: media.currentHours
+                currentHours: media.currentHours,
+                streamingService: media.streamingService,
+                contentType: media.contentType
+
             }]};
     try {
         await axios.patch(`http://localhost:7777/users/${loginToken}`, newMedia);
