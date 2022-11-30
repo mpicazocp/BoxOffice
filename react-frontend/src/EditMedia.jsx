@@ -57,6 +57,7 @@ function AddMedia (props) {
             <div className="show-info-text">
                 <div className="show-info-detail-title">Name: <div className="show-info-detail">{media.name}</div></div>
                 <div className="show-info-detail-title">Desc: <div className="show-info-detail">{media.desc}</div></div>
+                { loginToken !== null && 
                 <div className="show-information-detail-text">
                     <div className="show-info-detail-title">Streaming Service:
                         <input
@@ -91,6 +92,7 @@ function AddMedia (props) {
                         }
                     </div>
                 </div>
+                }
             </div>
         );
     };
