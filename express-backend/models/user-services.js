@@ -23,15 +23,20 @@ mongoose
 
 exports.getUsers = async function getUsers(email, pwsd, medList) {
   let result;
+  console.log(email);
+  console.log(pwsd);
+  console.log(medList);
   if (email === undefined && pwsd === undefined && medList === undefined) {
     result = await UserModel.find();
   } else if (email) {
+    console.log('found email');
     result = await UserModel.find({ email: email });
   } else if (pwsd) {
     result = await UserModel.find({ password: pwsd });
   } else if (medList) {
     result = await UserModel.find({ mediaList: medList });
   }
+  console.log(result);
   return result;
 };
 
@@ -57,7 +62,14 @@ exports.addUser = async function addUser(user) {
 
 exports.patchUser = async function modUser(userId, patchObj) {
   try {
-    const userToPatch = await UserModel.findById(userId);
+    await UserModel.findById(userId);
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+  const userToPatch = await UserModel.findById(userId);
+  const tempStore = userToPatch;
+  try {
     const newEmail = patchObj['email'];
     if (newEmail) {
       // change email
@@ -89,54 +101,87 @@ exports.patchUser = async function modUser(userId, patchObj) {
         }
       }
     }
-    const savedUser = await userToPatch.save();
-    return savedUser;
   } catch (error) {
     console.log(error);
+    userToPatch = restoreUser(userToPatch, tempStore);
   }
+  const savedUser = await userToPatch.save();
+  return savedUser;
 };
+
+// helper function to undo a user patch request
+// if an error occurs during the request
+// eslint-disable-next-line require-jsdoc
+function restoreUser(userToFix, oldObj) {
+  userToFix.email = oldObj.email;
+  userToFix.password = oldObj.password;
+  userToFix.mediaList = oldObj.mediaList;
+  console.log('reverting user');
+  console.log(userToFix);
+}
 
 // helper function to update specific JSON object in list
 // eslint-disable-next-line require-jsdoc
 function updateMediaListEntry(userToPatch, idx, newObj) {
   let modify = false;
-  if (
-    userToPatch.mediaList[idx].currentSeason !== undefined &&
-    userToPatch.mediaList[idx].currentSeason != newObj.currentSeason
-  ) {
-    userToPatch.mediaList[idx].currentSeason = newObj.currentSeason;
-    userToPatch.markModified(`mediaList.${idx}.currentSeason`);
-    modify = true;
-  }
-  if (
-    userToPatch.mediaList[idx].currentEpisode !== undefined &&
-    userToPatch.mediaList[idx].currentEpisode != newObj.currentEpisode
-  ) {
-    userToPatch.mediaList[idx].currentEpisode = newObj.currentEpisode;
-    userToPatch.markModified(`mediaList.${idx}.currentEpisode`);
-    modify = true;
-  }
-  if (
-    userToPatch.mediaList[idx].currentHours !== undefined &&
-    userToPatch.mediaList[idx].currentHours != newObj.currentHours
-  ) {
-    userToPatch.mediaList[idx].currentHours = newObj.currentHours;
-    userToPatch.markModified(`mediaList.${idx}.currentHours`);
-    modify = true;
-  }
-  if (
-    userToPatch.mediaList[idx].currentMinutes !== undefined &&
-    userToPatch.mediaList[idx].currentMinutes != newObj.currentMinutes
-  ) {
-    userToPatch.mediaList[idx].currentMinutes = newObj.currentMinutes;
-    userToPatch.markModified(`mediaList.${idx}.currentMinutes`);
-    modify = true;
-  }
-  if (modify) {
-    return true;
-  } else {
-    // if all entries match, delete the pointer JSON object
-    return false;
+  try {
+    if (
+      // userToPatch.mediaList[idx].currentSeason !== undefined &&
+      // newObj.currentSeason !== undefined &&
+      userToPatch.mediaList[idx].currentSeason !== undefined ||
+      userToPatch.mediaList[idx].currentSeason != newObj.currentSeason
+    ) {
+      userToPatch.mediaList[idx].currentSeason = newObj.currentSeason;
+      userToPatch.markModified(`mediaList.${idx}.currentSeason`);
+      console.log('curSeas changed');
+      console.log(userToPatch.mediaList[idx].currentSeason);
+      modify = true;
+    }
+    if (
+      // userToPatch.mediaList[idx].currentEpisode !== undefined &&
+      // newObj.currentEpisode !== undefined &&
+      userToPatch.mediaList[idx].currentEpisode !== undefined ||
+      userToPatch.mediaList[idx].currentEpisode != newObj.currentEpisode
+    ) {
+      userToPatch.mediaList[idx].currentEpisode = newObj.currentEpisode;
+      userToPatch.markModified(`mediaList.${idx}.currentEpisode`);
+      console.log('curEpchanged');
+      console.log(userToPatch.mediaList[idx].currentEpisode);
+      modify = true;
+    }
+    if (
+      // userToPatch.mediaList[idx].currentHours !== undefined &&
+      // newObj.currentHours !== undefined &&
+      userToPatch.mediaList[idx].currentHours !== undefined ||
+      userToPatch.mediaList[idx].currentHours != newObj.currentHours
+    ) {
+      userToPatch.mediaList[idx].currentHours = newObj.currentHours;
+      userToPatch.markModified(`mediaList.${idx}.currentHours`);
+      console.log('curHr changed');
+      console.log(userToPatch.mediaList[idx].currentHours);
+      modify = true;
+    }
+    if (
+      // userToPatch.mediaList[idx].currentMinutes !== undefined &&
+      // newObj.currentMinutes !== undefined &&
+      userToPatch.mediaList[idx].currentMinutes !== undefined ||
+      userToPatch.mediaList[idx].currentMinutes != newObj.currentMinutes
+    ) {
+      userToPatch.mediaList[idx].currentMinutes = newObj.currentMinutes;
+      userToPatch.markModified(`mediaList.${idx}.currentMinutes`);
+      console.log('curMin changed');
+      console.log(userToPatch.mediaList[idx].currentMinutes);
+      modify = true;
+    }
+    if (modify) {
+      return true;
+    } else {
+      // if all entries match, delete the pointer JSON object
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return undefined;
   }
 }
 
