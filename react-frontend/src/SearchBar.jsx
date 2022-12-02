@@ -1,45 +1,26 @@
-import React, {useState} from 'react'
+import React from 'react'
 import "./SearchBar.css"
 
+function SearchBar(props){
 
-function SearchBar(){
+    // import search from props
+    const { search, setSearch } = props;
 
-    // const searchBar = () => {};
-    const [searchInput, setSearchInput] = useState("");
-
-    const MediaList = []; // do we want this as movie list and show list? or all one
-
-
+    // on change, set the search value
     const handleChange = (e) => {
         e.preventDefault();
-        setSearchInput(e.target.value);
+        setSearch(e.target.value);
     };
 
-    if (searchInput.length > 0) {
-        MediaList.filter((media) => media.name.match(searchInput));
-    }
-
     return(
-    <div className = "SearchBarParent">
-        
-        <input className = "SearchBar"
-        type="search"
-        placeholder="Search here"
-        onChange={handleChange}
-        value={searchInput} />
-        
-        <table>
-            
-            {MediaList.map((media) => 
-                <div>
-                    <tr>
-                    <td>{media.name}</td>
-                    <td>{media.genre}</td>
-                    </tr>
-                </div>
-                )}
-        </table>
-    </div>
+        <div className = "SearchBarParent">
+            <input className = "SearchBar"
+                type="search"
+                placeholder="Search"
+                onChange={handleChange}
+                value={search}
+            />
+        </div>
     )};
     
     export default SearchBar;

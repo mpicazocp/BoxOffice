@@ -4,11 +4,13 @@ import "./ShowInformation.css"
 
 function ShowInformation (props) {
 
+  // import media properties from props
   const { name, img, rating, streamingService,
     isMovie, currentEpisode, currentSeason,
     currentTime, totalTime, desc } = props;
 
-  function isMovieRender(){
+  function isMovieRender() {
+    // if not a movie, render episode, minutes, hrs, etc
     const totalHours = Math.floor(totalTime / 60);
     const totalMinutes = Math.floor(totalTime % 60);
     const currentHours = Math.floor(currentTime / 60);
@@ -20,6 +22,7 @@ function ShowInformation (props) {
         </span>
       );
     }
+    // if movie, don't render episode/season
     return <span>at {currentHours}:{currentMinutes}/{totalHours}:{totalMinutes}</span>
   }
 

@@ -4,19 +4,27 @@ import "./MediaDisplay.css"
 
 function MediaDisplay(props) {
 
-  const { name, rating, streamingService, img } = props;
+  // retrieve necessary params for props
+  const { media, setSavedMedia, setIsOpen } = props;
 
+  // open the media (for overlay)
+  const openModal = () => {
+    setSavedMedia(media)
+    setIsOpen(true);
+  }
+
+  // display the image, name, desc, and streamingService
   return (
-    <div className="media-display-parent">
+    <button type="button" className="media-display-parent" onClick={openModal}>
       <img 
         className="media-display-image"
-        src={img}
-        alt={img}
+        src={media.img}
+        alt={media.img}
       />
-      <div className="media-display-title">{name}</div>
-      <div>Rated: {rating}</div>
-      <div>Watch it on: {streamingService}</div>
-    </div>
+      <div className="media-display-title">{media.name}</div>
+      <div>{media.desc}</div>
+      {media.streamingService && <div>Watched on: {media.streamingService}</div>}
+    </button>
   );
 }
 

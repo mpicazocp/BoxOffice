@@ -1,0 +1,51 @@
+
+html {background-color: #A13237}
+
+.homeButton {
+    font-size: 45px;
+    color:black;
+    border: solid 5px;
+    border-image:   linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
+    background-color: #A13237;
+    color: black;
+}
+
+.listings-page-header {
+  margin-top: 1.5em;
+  margin-left: 1em;
+}
+
+.headerTxt {
+    display: flex;
+    justify-content: center;
+    font-size: 55px;
+    color: white;
+}
+
+.listings {
+    font-size: 50 px;
+    color: black;
+}
+
+.listingParent {
+    margin-top: 5em;
+    /* display: flex; */
+    margin-left: 5em;
+    margin-right: 5em;
+}
+
+.listingImage {
+  width: 20em;
+  height: 20em;
+  border: solid #C5821F 7px;
+  background-color: #C5821F;
+}
+
+.listingText {
+    margin-left: 1em;
+    font: 55px;
+}
+
+.searchResults-Loading {
+    font-size: 50px;
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import "./LoginPage.css"
 
@@ -14,7 +14,7 @@ function UserLogin({ setLoginToken }) {
   const [errors, setErrors] = useState({
     emailInvalid: false, emailNotFound: false, incorrectPassword: false,
   }); 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
   
   // check to ensure the values are legitimate
   const checkFieldsValid = () => email.length !== 0 && password.length !== 0;
@@ -25,7 +25,7 @@ function UserLogin({ setLoginToken }) {
     if (!checkFieldsValid()) return;
 
     // Pulled out err to a seperate variables because setState is async. Causes race condition
-    const err = { emailInvalid: false, emailNotFound: false, incorrectPassword: false, wrongLogin: true};
+    const err = { emailInvalid: false, emailNotFound: false, incorrectPassword: false};
       if (email !== "" && !checkEmailValid()) { err.emailInvalid = true; }
       
     setErrors(err);
@@ -34,7 +34,7 @@ function UserLogin({ setLoginToken }) {
   // use axios to fetch all users from the backend->database
   async function fetchUsers() {
     try {
-      const response = await axios.get('http://localhost:5000/users');
+      const response = await axios.get('http://localhost:7777/users');
       return response.data.users_list;
     }
     catch (error) {
@@ -65,10 +65,13 @@ function UserLogin({ setLoginToken }) {
           if (user.password === password) {
             
             // this ensures that the user's data is accesible from other paths 
-            setLoginToken(email);
-            setIsLoggedIn(true);
-            
+            /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+            setLoginToken(user._id);
+            navigate('/');
           }
+        }
+        else {
+            setErrors({...errors, emailNotFound:true});
         }
       });
     }
@@ -76,24 +79,16 @@ function UserLogin({ setLoginToken }) {
 
   return (
     <div className="login-page-parent">
-      <div className="title"><span className="test">Box</span>Office</div>
+      <button type="button" className="login-page-title" onClick={() => navigate("/")}><span className="test">Box</span>Office</button>
       <div className="login-page-email-input">
         <input className={!errors.emailInvalid ? "input-box" : "input-box-error"} type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
-        { errors.emailInvalid && 
-          <div className="invalid">Email is Invalid</div>
-        }
+        { errors.emailInvalid && <div className="invalid">Email is Invalid</div> }
       </div>
       <div className="login-page-password-input">
         <input className="input-box" type="password" name="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
       </div>
-      <button className="loginButton" type="submit" onClick={loginButtonSubmitted}>
-      {isLoggedIn &&
-        <Link className="buttonLoginText" to='/myShows'>Login</Link>
-        }
-      {!isLoggedIn &&
-        <Link className="buttonLoginText" to='/login'>Login</Link>
-      }
-        </button>
+      { errors.emailNotFound && <div className="invalid">Email Not Found OR Password incorrect </div> }
+      <button className="loginButton" type="submit" onClick={loginButtonSubmitted}>Login</button>
     </div>
   );
 };

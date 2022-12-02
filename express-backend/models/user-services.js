@@ -10,188 +10,183 @@ dotenv.config();
 // mongoose.set('debug', true);
 
 mongoose
-  .connect(
-    process.env.MONGODB_URI,
-    // "mongodb://localhost:27017/users",
-    {
-      useNewUrlParser: true, // useFindAndModify: false,
-      useUnifiedTopology: true,
-      // eslint-disable-next-line comma-dangle
-    }
-  )
-  .catch((error) => console.log(error));
+    .connect(
+        process.env.MONGODB_URI,
+        // "mongodb://localhost:27017/users",
+        {
+            useNewUrlParser: true, // useFindAndModify: false,
+            useUnifiedTopology: true,
+            // eslint-disable-next-line comma-dangle
+        }
+    )
+    .catch((error) => console.log(error));
 
 exports.getUsers = async function getUsers(email, pwsd, medList) {
-  let result;
-  console.log(email);
-  console.log(pwsd);
-  console.log(medList);
-  if (email === undefined && pwsd === undefined && medList === undefined) {
-    result = await UserModel.find();
-  } else if (email) {
-    console.log('found email');
-    result = await UserModel.find({ email: email });
-  } else if (pwsd) {
-    result = await UserModel.find({ password: pwsd });
-  } else if (medList) {
-    result = await UserModel.find({ mediaList: medList });
-  }
-  console.log(result);
-  return result;
+    let result;
+    console.log(email);
+    console.log(pwsd);
+    console.log(medList);
+    if (email === undefined && pwsd === undefined && medList === undefined) {
+        result = await UserModel.find();
+    } else if (email) {
+        console.log('found email');
+        result = await UserModel.find({ email: email });
+    } else if (pwsd) {
+        result = await UserModel.find({ password: pwsd });
+    } else if (medList) {
+        result = await UserModel.find({ mediaList: medList });
+    }
+    console.log(result);
+    return result;
 };
 
 exports.findUserById = async function findUserById(id) {
-  try {
-    return await UserModel.findById(id);
-  } catch (error) {
-    console.log(error);
-    return undefined;
-  }
+    try {
+        return await UserModel.findById(id);
+    } catch (error) {
+        console.log(error);
+        return undefined;
+    }
 };
 
 exports.addUser = async function addUser(user) {
-  try {
-    const userToAdd = new UserModel(user);
-    const savedUser = await userToAdd.save();
-    return savedUser;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
+    try {
+        const userToAdd = new UserModel(user);
+        const savedUser = await userToAdd.save();
+        return savedUser;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
 };
 
 exports.patchUser = async function modUser(userId, patchObj) {
-  try {
-    await UserModel.findById(userId);
-  } catch (error) {
-    console.log(error);
-    return undefined;
-  }
-  const userToPatch = await UserModel.findById(userId);
-  const tempStore = userToPatch;
-  try {
-    const newEmail = patchObj['email'];
-    if (newEmail) {
-      // change email
-      userToPatch.email = newEmail;
+    try {
+        await UserModel.findById(userId);
+    } catch (error) {
+        console.log(error);
+        return undefined;
     }
-    const newPswd = patchObj['password'];
-    if (newPswd) {
-      // change password
-      userToPatch.password = newPswd;
-    }
-    const newMedia = patchObj['mediaList'];
-    if (newMedia) {
-      // add/remove media document references
-      for (let i = 0; i < newMedia.length; i++) {
-        let found = false;
-        for (let j = 0; j < userToPatch.mediaList.length; j++) {
-          if (userToPatch.mediaList[j].mediaId === newMedia[i].mediaId) {
-            // modify/remove existing media document reference
-            if (!updateMediaListEntry(userToPatch, j, newMedia[i])) {
-              userToPatch.mediaList.splice(j, 1);
+    const userToPatch = await UserModel.findById(userId);
+    const tempStore = userToPatch;
+    try {
+        const newEmail = patchObj['email'];
+        if (newEmail) {
+            // change email
+            userToPatch.email = newEmail;
+        }
+        const newPswd = patchObj['password'];
+        if (newPswd) {
+            // change password
+            userToPatch.password = newPswd;
+        }
+        const newMedia = patchObj['mediaList'];
+        if (newMedia) {
+            // add/remove media document references
+            for (let i = 0; i < newMedia.length; i++) {
+                let found = false;
+                for (let j = 0; j < userToPatch.mediaList.length; j++) {
+                    if (userToPatch.mediaList[j].mediaId === newMedia[i].mediaId) {
+                        // modify/remove existing media document reference
+                        if (!updateMediaListEntry(userToPatch, j, newMedia[i])) {
+                            userToPatch.mediaList.splice(j, 1);
+                        }
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    // add new media document reference
+                    userToPatch.mediaList.push(newMedia[i]);
+                }
             }
-            found = true;
-            break;
-          }
         }
-        if (!found) {
-          // add new media document reference
-          userToPatch.mediaList.push(newMedia[i]);
-        }
-      }
+    } catch (error) {
+        console.log(error);
+        userToPatch = restoreUser(userToPatch, tempStore);
     }
-  } catch (error) {
-    console.log(error);
-    userToPatch = restoreUser(userToPatch, tempStore);
-  }
-  const savedUser = await userToPatch.save();
-  return savedUser;
+    const savedUser = await userToPatch.save();
+    return savedUser;
 };
 
 // helper function to undo a user patch request
 // if an error occurs during the request
 // eslint-disable-next-line require-jsdoc
 function restoreUser(userToFix, oldObj) {
-  userToFix.email = oldObj.email;
-  userToFix.password = oldObj.password;
-  userToFix.mediaList = oldObj.mediaList;
-  console.log('reverting user');
-  console.log(userToFix);
+    userToFix.email = oldObj.email;
+    userToFix.password = oldObj.password;
+    userToFix.mediaList = oldObj.mediaList;
+    console.log('reverting user');
+    console.log(userToFix);
 }
 
 // helper function to update specific JSON object in list
 // eslint-disable-next-line require-jsdoc
 function updateMediaListEntry(userToPatch, idx, newObj) {
-  let modify = false;
-  try {
+    let modify = false;
     if (
-      // userToPatch.mediaList[idx].currentSeason !== undefined &&
-      // newObj.currentSeason !== undefined &&
-      userToPatch.mediaList[idx].currentSeason !== undefined ||
-      userToPatch.mediaList[idx].currentSeason != newObj.currentSeason
+        userToPatch.mediaList[idx].streamingService !== undefined &&
+        userToPatch.mediaList[idx].streamingService != newObj.streamingService
     ) {
-      userToPatch.mediaList[idx].currentSeason = newObj.currentSeason;
-      userToPatch.markModified(`mediaList.${idx}.currentSeason`);
-      console.log('curSeas changed');
-      console.log(userToPatch.mediaList[idx].currentSeason);
-      modify = true;
+        userToPatch.mediaList[idx].streamingService = newObj.streamingService;
+        userToPatch.markModified(`mediaList.${idx}.streamingService`);
+        modify = true;
     }
     if (
-      // userToPatch.mediaList[idx].currentEpisode !== undefined &&
-      // newObj.currentEpisode !== undefined &&
-      userToPatch.mediaList[idx].currentEpisode !== undefined ||
-      userToPatch.mediaList[idx].currentEpisode != newObj.currentEpisode
+        userToPatch.mediaList[idx].contentType !== undefined &&
+        userToPatch.mediaList[idx].contentType != newObj.contentType
     ) {
-      userToPatch.mediaList[idx].currentEpisode = newObj.currentEpisode;
-      userToPatch.markModified(`mediaList.${idx}.currentEpisode`);
-      console.log('curEpchanged');
-      console.log(userToPatch.mediaList[idx].currentEpisode);
-      modify = true;
+        userToPatch.mediaList[idx].contentType = newObj.contentType;
+        userToPatch.markModified(`mediaList.${idx}.contentType`);
+        modify = true;
     }
     if (
-      // userToPatch.mediaList[idx].currentHours !== undefined &&
-      // newObj.currentHours !== undefined &&
-      userToPatch.mediaList[idx].currentHours !== undefined ||
-      userToPatch.mediaList[idx].currentHours != newObj.currentHours
+        userToPatch.mediaList[idx].currentSeason !== undefined &&
+        userToPatch.mediaList[idx].currentSeason != newObj.currentSeason
     ) {
-      userToPatch.mediaList[idx].currentHours = newObj.currentHours;
-      userToPatch.markModified(`mediaList.${idx}.currentHours`);
-      console.log('curHr changed');
-      console.log(userToPatch.mediaList[idx].currentHours);
-      modify = true;
+        userToPatch.mediaList[idx].currentSeason = newObj.currentSeason;
+        userToPatch.markModified(`mediaList.${idx}.currentSeason`);
+        modify = true;
     }
     if (
-      // userToPatch.mediaList[idx].currentMinutes !== undefined &&
-      // newObj.currentMinutes !== undefined &&
-      userToPatch.mediaList[idx].currentMinutes !== undefined ||
-      userToPatch.mediaList[idx].currentMinutes != newObj.currentMinutes
+        userToPatch.mediaList[idx].currentEpisode !== undefined &&
+        userToPatch.mediaList[idx].currentEpisode != newObj.currentEpisode
     ) {
-      userToPatch.mediaList[idx].currentMinutes = newObj.currentMinutes;
-      userToPatch.markModified(`mediaList.${idx}.currentMinutes`);
-      console.log('curMin changed');
-      console.log(userToPatch.mediaList[idx].currentMinutes);
-      modify = true;
+        userToPatch.mediaList[idx].currentEpisode = newObj.currentEpisode;
+        userToPatch.markModified(`mediaList.${idx}.currentEpisode`);
+        modify = true;
+    }
+    if (
+        userToPatch.mediaList[idx].currentHours !== undefined &&
+        userToPatch.mediaList[idx].currentHours != newObj.currentHours
+    ) {
+        userToPatch.mediaList[idx].currentHours = newObj.currentHours;
+        userToPatch.markModified(`mediaList.${idx}.currentHours`);
+        modify = true;
+    }
+    if (
+        userToPatch.mediaList[idx].currentMinutes !== undefined &&
+        userToPatch.mediaList[idx].currentMinutes != newObj.currentMinutes
+    ) {
+        userToPatch.mediaList[idx].currentMinutes = newObj.currentMinutes;
+        userToPatch.markModified(`mediaList.${idx}.currentMinutes`);
+        modify = true;
     }
     if (modify) {
-      return true;
+        return true;
     } else {
-      // if all entries match, delete the pointer JSON object
-      return false;
+        // if all entries match, delete the pointer JSON object
+        return false;
     }
-  } catch (error) {
-    console.log(error);
-    return undefined;
-  }
 }
 
 exports.findByIdAndDelete = async function findByIdAndDelete(id) {
-  try {
-    const result = await UserModel.findByIdAndDelete(id);
-    console.log(JSON.stringify(result));
-    return result;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
+    try {
+        const result = await UserModel.findByIdAndDelete(id);
+        console.log(JSON.stringify(result));
+        return result;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
 };

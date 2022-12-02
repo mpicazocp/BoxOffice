@@ -6,18 +6,19 @@ html {background-color: #A13237}
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  margin-top: 1em;
+    margin-top: 7em;
 }
 
 .test {
   color: white;
 }
 
-.title {
+.account-creation-title {
   font-size: 150px;
   color: black;
   border: solid 15px;
   border-image:   linear-gradient(to right, white 0%, white 40%, black 40%, black 100%) 5;
+  background-color: #A13237;
 }
 
 .account-creation-email-input {
@@ -25,7 +26,7 @@ html {background-color: #A13237}
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  margin-top: 0.25em;
+  margin-top: 2em;
 }
 
 .account-creation-password-input {
@@ -59,5 +60,5 @@ html {background-color: #A13237}
   background-color: #C5821F;
   border-color: #C5821F;
 
-  margin-top: 0.2em;
+  margin-top: 1em;
 }

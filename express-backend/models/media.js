@@ -1,41 +1,26 @@
 const mongoose = require('mongoose');
 
 const MediaSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        img: {
+            // img url to be rendered
+            type: String,
+            required: true,
+            trim: false,
+        },
+        desc: {
+            //  description
+            type: String,
+            required: true,
+            trim: true,
+        },
     },
-    contentType: {
-      type: String,
-      required: true,
-      trim: true,
-      // validate(value) {
-      //   if (value !== 'series' || value !== 'movie') {
-      //     throw new Error('Invalid media type.');
-      //   }
-      // },
-    },
-    streamingService: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    img: {
-      // img url to be rendered
-      type: String,
-      required: true,
-      trim: false,
-    },
-    desc: {
-      //  description
-      type: String,
-      required: true,
-      trim: true,
-    },
-  },
-  { collection: 'media_list' }
+    { collection: 'media_list' }
 );
 
 const Media = mongoose.model('Media', MediaSchema);
