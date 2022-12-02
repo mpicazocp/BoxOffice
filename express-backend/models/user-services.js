@@ -5,41 +5,38 @@ const mongoose = require('mongoose');
 const UserModel = require('./user');
 const dotenv = require('dotenv');
 
-dotenv.config();
+dotenv.config(); // enable use of variables in .env file
 
-// mongoose.set('debug', true);
 
 mongoose
     .connect(
         process.env.MONGODB_URI,
-        // "mongodb://localhost:27017/users",
         {
-            useNewUrlParser: true, // useFindAndModify: false,
+            useNewUrlParser: true,
             useUnifiedTopology: true,
             // eslint-disable-next-line comma-dangle
         }
     )
     .catch((error) => console.log(error));
 
+
+// backend connection to User HTTP GET call, retrieves based on
+// User schema attributes
 exports.getUsers = async function getUsers(email, pwsd, medList) {
     let result;
-    console.log(email);
-    console.log(pwsd);
-    console.log(medList);
     if (email === undefined && pwsd === undefined && medList === undefined) {
         result = await UserModel.find();
     } else if (email) {
-        console.log('found email');
         result = await UserModel.find({ email: email });
     } else if (pwsd) {
         result = await UserModel.find({ password: pwsd });
     } else if (medList) {
         result = await UserModel.find({ mediaList: medList });
     }
-    console.log(result);
     return result;
 };
 
+// backend function to retrieve User objects by their ID
 exports.findUserById = async function findUserById(id) {
     try {
         return await UserModel.findById(id);
@@ -49,6 +46,9 @@ exports.findUserById = async function findUserById(id) {
     }
 };
 
+// backend connection to User HTTP POST call, creates
+// a new User object in the DB with the attributes
+// from the input parameter
 exports.addUser = async function addUser(user) {
     try {
         const userToAdd = new UserModel(user);
@@ -60,16 +60,11 @@ exports.addUser = async function addUser(user) {
     }
 };
 
+// backend connection to User HTTP PATCH Call
 exports.patchUser = async function modUser(userId, patchObj) {
     try {
-        await UserModel.findById(userId);
-    } catch (error) {
-        console.log(error);
-        return undefined;
-    }
-    const userToPatch = await UserModel.findById(userId);
-    const tempStore = userToPatch;
-    try {
+        // find user to patch
+        const userToPatch = await UserModel.findById(userId);
         const newEmail = patchObj['email'];
         if (newEmail) {
             // change email
@@ -84,11 +79,20 @@ exports.patchUser = async function modUser(userId, patchObj) {
         if (newMedia) {
             // add/remove media document references
             for (let i = 0; i < newMedia.length; i++) {
+                // check through all Media pointer objects
+                // in the incoming object
                 let found = false;
                 for (let j = 0; j < userToPatch.mediaList.length; j++) {
-                    if (userToPatch.mediaList[j].mediaId === newMedia[i].mediaId) {
+                    // check through all Media pointer objects currently
+                    // in the target user for any ID matches
+                    if (userToPatch.mediaList[j].mediaId ===
+                         newMedia[i].mediaId) {
                         // modify/remove existing media document reference
-                        if (!updateMediaListEntry(userToPatch, j, newMedia[i])) {
+                        if (!updateMediaListEntry(userToPatch, j,
+                             newMedia[i])) {
+                            // if the matched Media pointer objects are
+                            // identical, delete the one stored in the
+                            // user's attribute
                             userToPatch.mediaList.splice(j, 1);
                         }
                         found = true;
@@ -96,29 +100,20 @@ exports.patchUser = async function modUser(userId, patchObj) {
                     }
                 }
                 if (!found) {
-                    // add new media document reference
+                    // if there is no ID match,
+                    // add as a new media document reference
                     userToPatch.mediaList.push(newMedia[i]);
                 }
             }
         }
+        // save changes to the user
+        const savedUser = await userToPatch.save();
+        return savedUser;
     } catch (error) {
         console.log(error);
-        userToPatch = restoreUser(userToPatch, tempStore);
+        return undefined;
     }
-    const savedUser = await userToPatch.save();
-    return savedUser;
 };
-
-// helper function to undo a user patch request
-// if an error occurs during the request
-// eslint-disable-next-line require-jsdoc
-function restoreUser(userToFix, oldObj) {
-    userToFix.email = oldObj.email;
-    userToFix.password = oldObj.password;
-    userToFix.mediaList = oldObj.mediaList;
-    console.log('reverting user');
-    console.log(userToFix);
-}
 
 // helper function to update specific JSON object in list
 // eslint-disable-next-line require-jsdoc
@@ -128,6 +123,7 @@ function updateMediaListEntry(userToPatch, idx, newObj) {
         userToPatch.mediaList[idx].streamingService !== undefined &&
         userToPatch.mediaList[idx].streamingService != newObj.streamingService
     ) {
+        // update the Media pointer object's streamingService attribute
         userToPatch.mediaList[idx].streamingService = newObj.streamingService;
         userToPatch.markModified(`mediaList.${idx}.streamingService`);
         modify = true;
@@ -136,6 +132,7 @@ function updateMediaListEntry(userToPatch, idx, newObj) {
         userToPatch.mediaList[idx].contentType !== undefined &&
         userToPatch.mediaList[idx].contentType != newObj.contentType
     ) {
+        // update the Media pointer object's contentType attribute
         userToPatch.mediaList[idx].contentType = newObj.contentType;
         userToPatch.markModified(`mediaList.${idx}.contentType`);
         modify = true;
@@ -144,6 +141,7 @@ function updateMediaListEntry(userToPatch, idx, newObj) {
         userToPatch.mediaList[idx].currentSeason !== undefined &&
         userToPatch.mediaList[idx].currentSeason != newObj.currentSeason
     ) {
+        // update the Media pointer object's currentSeason attribute
         userToPatch.mediaList[idx].currentSeason = newObj.currentSeason;
         userToPatch.markModified(`mediaList.${idx}.currentSeason`);
         modify = true;
@@ -152,6 +150,7 @@ function updateMediaListEntry(userToPatch, idx, newObj) {
         userToPatch.mediaList[idx].currentEpisode !== undefined &&
         userToPatch.mediaList[idx].currentEpisode != newObj.currentEpisode
     ) {
+        // update the Media pointer object's currentEpisode attribute
         userToPatch.mediaList[idx].currentEpisode = newObj.currentEpisode;
         userToPatch.markModified(`mediaList.${idx}.currentEpisode`);
         modify = true;
@@ -160,6 +159,7 @@ function updateMediaListEntry(userToPatch, idx, newObj) {
         userToPatch.mediaList[idx].currentHours !== undefined &&
         userToPatch.mediaList[idx].currentHours != newObj.currentHours
     ) {
+        // update the Media pointer object's currentHours attribute
         userToPatch.mediaList[idx].currentHours = newObj.currentHours;
         userToPatch.markModified(`mediaList.${idx}.currentHours`);
         modify = true;
@@ -168,18 +168,22 @@ function updateMediaListEntry(userToPatch, idx, newObj) {
         userToPatch.mediaList[idx].currentMinutes !== undefined &&
         userToPatch.mediaList[idx].currentMinutes != newObj.currentMinutes
     ) {
+        // update the Media pointer object's currentMinutes attribute
         userToPatch.mediaList[idx].currentMinutes = newObj.currentMinutes;
         userToPatch.markModified(`mediaList.${idx}.currentMinutes`);
         modify = true;
     }
     if (modify) {
+        // if at least one entry was changed, flag to keep the pointer object
         return true;
     } else {
-        // if all entries match, delete the pointer JSON object
+        // if all entries match, flag to delete the pointer object
         return false;
     }
 }
 
+// backend connection to User HTTP DELETE call, removes a User
+// object based on its ID
 exports.findByIdAndDelete = async function findByIdAndDelete(id) {
     try {
         const result = await UserModel.findByIdAndDelete(id);
