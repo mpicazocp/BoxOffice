@@ -44,8 +44,9 @@ function MyShows() {
     }
   };
 
-  // Run on page load
+  // Run on page load 
   useEffect(() => {
+    // if !logged in, go to home page
     const loginToken = getLoginToken();
     if (loginToken === null) navigate('/');
 
@@ -61,6 +62,7 @@ function MyShows() {
       .catch(error => console.log(error.response));
   }, [])
 
+  // sort the media objects depending on the option selected
   function getSortedMediaList() {
     const temp = [...mediaList];
     temp.sort((a,b) => {
@@ -88,16 +90,19 @@ function MyShows() {
     return temp;
   }
 
+  // adjust the media List to the left when the user scrolls through media
   function moveMediaListLeft(){
     if (index.start - 1 < 0) return
     setIndex({start: index.start - 1, end: index.end - 1});
   }
 
+  // adjust the media list to the right when the user scrolls through media
   function moveMediaListRight(){
     if (index.end + 1 > mediaList.length) return;
     setIndex({start: index.start + 1, end: index.end + 1});
   }
 
+  // button to determine how the user would like to sort
   function conditionalButton(){
     if (sortingSelection !== ""){
       return (

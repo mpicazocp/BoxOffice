@@ -3,8 +3,10 @@ import "./SearchBar.css"
 
 function SearchBar(props){
 
+    // import search from props
     const { search, setSearch } = props;
 
+    // on change, set the search value
     const handleChange = (e) => {
         e.preventDefault();
         setSearch(e.target.value);

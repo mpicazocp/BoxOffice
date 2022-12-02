@@ -7,6 +7,7 @@ import "./EditMedia.css"
 
 function AddMedia (props) {
 
+    // assign media object params to props and useState to hold these values
     const { id, name, img, desc, streamingService, contentType, currentSeason, currentEpisode, currentHours, currentMinutes, closeModalAndSave, closeModalAndDelete, isMyShow } = props;
     const [media, setMedia] = useState({
         name,
@@ -19,9 +20,11 @@ function AddMedia (props) {
         currentHours,
         currentMinutes
     });
+    // determine whether a user is logged in or not using session stored data
     const { getLoginToken } = useLoginToken();
     const loginToken = getLoginToken();
 
+    // function to ensure that the media object is valid
     const validateMedia = () => {
         if (media.contentType === undefined) return false;
         if (media.contentType === "Movie"){
@@ -35,6 +38,7 @@ function AddMedia (props) {
         return Object.keys(media).every(key => media[key] !== undefined && media[key] !== "");
     }
 
+    // if media is valid: submit
     const submitNewMedia = () => {
         if (!validateMedia()) return;
         if (media.contentType === "Movie"){
@@ -47,6 +51,7 @@ function AddMedia (props) {
         closeModalAndSave(media);
     }
 
+    // delete the media object from the currently logged in user's shows
     const deleteMedia = () => {
         media.id = id;
         closeModalAndDelete(media);

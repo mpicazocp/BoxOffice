@@ -10,7 +10,7 @@ import EditMedia from './EditMedia';
 import "./SearchResults.css"
 
 function SearchResults(){
-
+    // navigate variable
     const navigate = useNavigate();
     const { getLoginToken } = useLoginToken();
     const queryParameters = new URLSearchParams(window.location?.search)
@@ -22,6 +22,7 @@ function SearchResults(){
     const [index, setIndex] = useState({start: 0, end: 3});
     const [isLoading, setIsLoading] = useState(true);
 
+    // fetch the search from the media objects in backend
     async function fetchSearch(name) {
         const key = process.env.REACT_APP_IMDB_API_KEY;
         try {
@@ -34,6 +35,7 @@ function SearchResults(){
         }
     }
 
+    // set media list to the result of the get
     useEffect(() => {
         const name = queryParameters.get('name');
         if (name) {
