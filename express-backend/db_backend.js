@@ -15,8 +15,8 @@ app.use(express.json());
 
 // HTTP get request for the root view of the backend
 app.get('/', async (req, res) => {
-    res.send('Welcome to the BoxOffice database. Navigate',
-        'to /users or /media for access to our collections.');
+    res.send('Welcome to the BoxOffice database. Navigate' +
+    ' to /users or /media for access to our collections.');
 });
 
 /* ########################## begin user requests ###########################*/
@@ -157,7 +157,7 @@ app.delete('/media/:id', async (req, res) => {
 module.exports = app;
 app.listen(process.env.PORT || port, () => {
     if (process.env.PORT) {
-        console.log(`REST API on Atlas is listening`,
+        console.log(`REST API on Atlas is listening` +
         `on port: ${process.env.PORT}.`);
     } else console.log(`REST API is listening on local port: ${port}.`);
 });
