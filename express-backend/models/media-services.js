@@ -6,31 +6,28 @@ const mongoose = require('mongoose');
 const MediaModel = require('./media');
 const dotenv = require('dotenv');
 
-dotenv.config();
-
-mongoose.set('debug', true);
+dotenv.config(); // enable use of variables in .env file
 
 mongoose
   .connect(
     process.env.MONGODB_URI,
     // "mongodb://localhost:27017/users",
     {
-      useNewUrlParser: true, // useFindAndModify: false,
+      useNewUrlParser: true,
       useUnifiedTopology: true,
+      // eslint-disable-next-line comma-dangle
     }
   )
   .catch((error) => console.log(error));
 
-exports.getMedia = async function getMedia(name, type, strmSrv, img, desc) {
+// backend connection to Media HTTP GET call, retrieves based on
+// Media schema attributes
+exports.getMedia = async function getMedia(name, img, desc) {
   let result;
-  if (name === undefined && type === undefined && strmSrv === undefined && img === undefined && desc === undefined) {
+  if (name === undefined && img === undefined && desc === undefined) {
     result = await MediaModel.find();
   } else if (name) {
     result = await MediaModel.find({ name: name });
-  } else if (type) {
-    result = await MediaModel.find({ contentType: type });
-  } else if (strmSrv) {
-    result = await MediaModel.find({ streamingService: strmSrv });
   } else if (img) {
     result = await MediaModel.find({ img: img });
   } else if (desc) {
@@ -39,6 +36,7 @@ exports.getMedia = async function getMedia(name, type, strmSrv, img, desc) {
   return result;
 };
 
+// backend function to retrieve Media objects by their ID
 exports.findMediaById = async function findMediaById(id) {
   try {
     return await MediaModel.findById(id);
@@ -48,6 +46,9 @@ exports.findMediaById = async function findMediaById(id) {
   }
 };
 
+// backend connection to Media HTTP POST call, creates
+// a new Media object in the DB with the attributes
+// from the input parameter
 exports.addMedia = async function addMedia(media) {
   try {
     const mediaToAdd = new MediaModel(media);
@@ -59,6 +60,8 @@ exports.addMedia = async function addMedia(media) {
   }
 };
 
+// backend connection to Media HTTP DELETE call, removes a Media
+// object based on its ID
 exports.findByIdAndDelete = async function findByIdAndDelete(id) {
   try {
     const result = await MediaModel.findByIdAndDelete(id);
